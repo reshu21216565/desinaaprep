@@ -34,8 +34,8 @@ export default function AdminSidebar({ userEmail: initialEmail }: { userEmail: s
     import("@/supabase/client").then(({ createClient }) => {
       createClient()
         .auth.getUser()
-        .then(({ data }) => {
-          if (data.user?.email) setUserEmail(data.user.email);
+        .then(({ data }: any) => {
+          if (data?.user?.email) setUserEmail(data.user.email);
         });
     });
   }, []);

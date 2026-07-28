@@ -44,3 +44,18 @@ html, body {
   outline: 2px solid #6F4E37;
   outline-offset: 2px;
 }
+
+/* Mascot Idle Animation */
+@keyframes mascot-bob {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.animate-mascot-bob {
+  animation: mascot-bob 2.5s ease-in-out infinite;
+}
+

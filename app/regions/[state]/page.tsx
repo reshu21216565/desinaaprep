@@ -2,7 +2,7 @@ import { INDIAN_STATES, SAMPLE_MEASUREMENTS, SECTORS } from "@/lib/data";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { MapPin, Building2 } from "lucide-react";
-import MeasurementCard from "@/components/measurements/MeasurementCard";
+import StateSectorView from "@/components/measurements/StateSectorView";
 
 export default async function StatePage({
   params,
@@ -74,7 +74,7 @@ export default async function StatePage({
 
           <div className="text-right">
             <div className="font-serif text-3xl font-bold text-[#B88646]">
-              {state.measurement_count || 0}
+              {state.measurement_count || stateMeasurements.length || 0}
             </div>
 
             <div className="text-xs text-[#C8B8A2]">
@@ -99,41 +99,18 @@ export default async function StatePage({
         {/* Main Content */}
         <div className="lg:col-span-2">
 
-          {/* Measurements */}
+          {/* Measurements & Sector Table View */}
           <section className="mb-10">
 
             <h2 className="font-serif text-xl font-bold text-[#2E2A26] mb-5">
               Measurements from {state.name}
             </h2>
 
-            {stateMeasurements.length > 0 ? (
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-
-                {stateMeasurements.map((m) => (
-                  <MeasurementCard
-                    key={m.id}
-                    m={m}
-                  />
-                ))}
-
-              </div>
-
-            ) : (
-
-              <div className="text-center py-12 bg-white border border-[#E8DED1] rounded-lg">
-
-                <p className="text-[#A09080] text-sm">
-                  Measurements for {state.name} are being documented.
-                </p>
-
-                <p className="text-xs text-[#C8B8A2] mt-1">
-                  Check back soon.
-                </p>
-
-              </div>
-
-            )}
+            <StateSectorView
+              stateName={state.name}
+              measurements={stateMeasurements}
+              sectors={SECTORS}
+            />
 
           </section>
 

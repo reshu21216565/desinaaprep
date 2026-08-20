@@ -66,8 +66,9 @@ export default function IndiaMap() {
 
   const handleStateClick = (state: {
     id: string;
-    title: string;
+    title: string | null;
   }) => {
+    if (!state.title) return;
     setSelectedState(state.id);
 
     const stateSlug = state.title

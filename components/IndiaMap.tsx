@@ -69,7 +69,6 @@ export default function IndiaMap() {
     title: string | null;
   }) => {
     if (!state.title) return;
-
     setSelectedState(state.id);
 
     const stateSlug = state.title

@@ -52,28 +52,15 @@ export default function StateSectorView({
   // Group measurements by sector
   const sectorGroups = useMemo(() => {
     const map = new Map<string, Measurement[]>();
-
-    // Create a helper to find the canonical slug for a sector
-    const getCanonicalKey = (rawKey: string) => {
-      const found = sectors.find(s =>
-        s.slug === rawKey ||
-        s.id === rawKey ||
-        s.name.toLowerCase() === rawKey.toLowerCase()
-      );
-      return found ? found.slug : rawKey;
-    };
-
     measurements.forEach((m) => {
-      const rawKey = m.sector || "other";
-      const key = getCanonicalKey(rawKey);
-
+      const key = m.sector || "other";
       if (!map.has(key)) {
         map.set(key, []);
       }
       map.get(key)!.push(m);
     });
     return map;
-  }, [measurements, sectors]);
+  }, [measurements]);
 
   // Active sector keys
   const activeSectorKeys = useMemo(() => {
@@ -104,10 +91,11 @@ export default function StateSectorView({
           <div className="flex items-center gap-1 bg-[#FAF7F2] border border-[#E8DED1] p-1 rounded-lg self-start sm:self-auto">
             <button
               onClick={() => setViewMode("table")}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all ${viewMode === "table"
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
+                viewMode === "table"
                   ? "bg-[#6F4E37] text-white shadow-sm font-semibold"
                   : "text-[#7A6E65] hover:text-[#2E2A26] hover:bg-[#EAE2D5]"
-                }`}
+              }`}
               title="Switch to Excel Table View"
             >
               <Table className="w-3.5 h-3.5" />
@@ -116,10 +104,11 @@ export default function StateSectorView({
 
             <button
               onClick={() => setViewMode("card")}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all ${viewMode === "card"
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
+                viewMode === "card"
                   ? "bg-[#6F4E37] text-white shadow-sm font-semibold"
                   : "text-[#7A6E65] hover:text-[#2E2A26] hover:bg-[#EAE2D5]"
-                }`}
+              }`}
               title="Switch to Cards View"
             >
               <LayoutGrid className="w-3.5 h-3.5" />
@@ -132,10 +121,11 @@ export default function StateSectorView({
         <div className="flex flex-wrap gap-2.5">
           <button
             onClick={() => setSelectedSector("all")}
-            className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer ${selectedSector === "all"
+            className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer ${
+              selectedSector === "all"
                 ? "bg-[#6F4E37] text-white shadow-sm font-semibold border border-[#6F4E37]"
                 : "bg-[#FAF7F2] text-[#6F4E37] border border-[#E8DED1] hover:border-[#6F4E37] hover:bg-[#6F4E37] hover:text-white"
-              }`}
+            }`}
           >
             All Sectors ({measurements.length})
           </button>
@@ -148,10 +138,11 @@ export default function StateSectorView({
               <button
                 key={secKey}
                 onClick={() => setSelectedSector(secKey)}
-                className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer ${selectedSector === secKey
+                className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer ${
+                  selectedSector === secKey
                     ? "bg-[#6F4E37] text-white shadow-sm font-semibold border border-[#6F4E37]"
                     : "bg-[#FAF7F2] text-[#6F4E37] border border-[#E8DED1] hover:border-[#6F4E37] hover:bg-[#6F4E37] hover:text-white"
-                  }`}
+                }`}
               >
                 {displayName} ({count})
               </button>
@@ -194,15 +185,16 @@ export default function StateSectorView({
                     <th className="py-3.5 px-3 border-r border-[#5C4232]">Type / Category</th>
                     <th className="py-3.5 px-4 border-r border-[#5C4232]">Approx. Modern Equivalent</th>
                     <th className="py-3.5 px-4 border-r border-[#5C4232]">Relation / Hierarchy</th>
-                    <th className="py-3.5 px-4">Used In / Context and Reference</th>
+                    <th className="py-3.5 px-4">Used In / Context</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-[#E8DED1] text-[#2E2A26]">
                   {filtered.map((m, idx) => (
                     <tr
                       key={m.id}
-                      className={`${idx % 2 === 0 ? "bg-white" : "bg-[#FDFBF7]"
-                        } hover:bg-[#F5EFE6] transition-colors`}
+                      className={`${
+                        idx % 2 === 0 ? "bg-white" : "bg-[#FDFBF7]"
+                      } hover:bg-[#F5EFE6] transition-colors`}
                     >
                       {/* # */}
                       <td className="py-3.5 px-3 text-center font-semibold text-[#8B7355] border-r border-[#E8DED1]">
@@ -251,15 +243,9 @@ export default function StateSectorView({
                             : "—")}
                       </td>
 
-                      {/* Used In / Context and Reference */}
+                      {/* Used In / Context */}
                       <td className="py-3.5 px-4 text-[#4A423A] leading-relaxed max-w-xs">
                         {m.meaning || (m.used_in && m.used_in.join(", ")) || "—"}
-                        {m.references && m.references.length > 0 && (
-                          <div className="mt-1 text-[#8B7355] text-[10px]">
-                            <span className="font-semibold">Ref: </span>
-                            {m.references.join(", ")}
-                          </div>
-                        )}
                       </td>
                     </tr>
                   ))}

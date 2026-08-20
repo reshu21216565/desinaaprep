@@ -1,15 +1,6 @@
 import { Measurement, State, Sector, Reference, Infographic } from "@/types";
 import { UP_MEASUREMENTS } from "@/lib/upData";
 import { JHARKHAND_MEASUREMENTS } from "@/lib/jharkhandData";
-import { MAHARASHTRA_MEASUREMENTS } from "@/lib/maharashtraData";
-import { MP_MEASUREMENTS } from "@/lib/mpData";
-import { RAJASTHAN_MEASUREMENTS } from "@/lib/rajasthanData";
-import { KARNATAKA_MEASUREMENTS } from "@/lib/karnatakaData";
-import { TAMILNADU_MEASUREMENTS } from "@/lib/tamilnaduData";
-import { AP_MEASUREMENTS } from "@/lib/apData";
-import { CHHATTISGARH_MEASUREMENTS } from "@/lib/chhattisgarhData";
-import { GOA_MEASUREMENTS } from "@/lib/goaData";
-import { GUJARAT_MEASUREMENTS } from "@/lib/gujaratData";
 
 // ─── Base Sample Measurements ──────────────────────────────────────────────────
 
@@ -165,16 +156,7 @@ const BASE_SAMPLE_MEASUREMENTS: Measurement[] = [
 export const SAMPLE_MEASUREMENTS: Measurement[] = [
   ...BASE_SAMPLE_MEASUREMENTS,
   ...UP_MEASUREMENTS,
-  ...JHARKHAND_MEASUREMENTS,
-  ...MAHARASHTRA_MEASUREMENTS,
-  ...MP_MEASUREMENTS,
-  ...RAJASTHAN_MEASUREMENTS,
-  ...KARNATAKA_MEASUREMENTS,
-  ...TAMILNADU_MEASUREMENTS,
-  ...AP_MEASUREMENTS,
-  ...CHHATTISGARH_MEASUREMENTS,
-  ...GOA_MEASUREMENTS,
-  ...GUJARAT_MEASUREMENTS
+  ...JHARKHAND_MEASUREMENTS
 ];
 
 // ─── Sample States ────────────────────────────────────────────────────────────

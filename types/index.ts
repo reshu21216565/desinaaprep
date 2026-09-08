@@ -23,6 +23,8 @@ export interface Measurement {
   tags?: string[];
   created_at?: string;
   updated_at?: string;
+  historical_period?: string;
+  region_applicable?: string;
 }
 
 export type MeasurementCategory =

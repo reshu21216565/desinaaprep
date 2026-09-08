@@ -1,6 +1,12 @@
 import { Measurement, State, Sector, Reference, Infographic } from "@/types";
 import { UP_MEASUREMENTS } from "@/lib/upData";
 import { JHARKHAND_MEASUREMENTS } from "@/lib/jharkhandData";
+import { BIHAR_MEASUREMENTS } from "@/lib/biharData";
+import { HARYANA_MEASUREMENTS } from "@/lib/haryanaData";
+import { ASSAM_MEASUREMENTS } from "@/lib/assamData";
+import { WEST_BENGAL_MEASUREMENTS } from "@/lib/westBengalData";
+import { KERALA_MEASUREMENTS } from "@/lib/keralaData";
+import { ODISHA_MEASUREMENTS } from "@/lib/odishaData";
 
 // ─── Base Sample Measurements ──────────────────────────────────────────────────
 
@@ -21,7 +27,7 @@ const BASE_SAMPLE_MEASUREMENTS: Measurement[] = [
       "The Angula is one of the oldest units of measurement in Indian history, dating back to the Vedic era. It appears extensively in Vastu Shastra texts and was standardised across multiple ancient treatises including the Arthashastra of Kautilya and the Manasara.",
     modern_equivalent: "~1.763 cm (varies by text)",
     conversion_formula: "1 Angula ≈ 1.763 cm; 24 Angulas = 1 Hasta",
-    states: ["Telangana", "Andhra Pradesh", "Karnataka", "Tamil Nadu", "Kerala"],
+    states: ["Telangana", "Andhra Pradesh", "Karnataka", "Tamil Nadu"],
     districts: ["Hyderabad", "Warangal", "Vijayawada"],
     used_in: ["Temple construction", "Vastu Shastra", "Sculpture", "Town planning"],
     hierarchy: [
@@ -154,9 +160,15 @@ const BASE_SAMPLE_MEASUREMENTS: Measurement[] = [
 ];
 
 export const SAMPLE_MEASUREMENTS: Measurement[] = [
-  ...BASE_SAMPLE_MEASUREMENTS,
+  ...WEST_BENGAL_MEASUREMENTS,
+  ...JHARKHAND_MEASUREMENTS,
+  ...BIHAR_MEASUREMENTS,
+  ...HARYANA_MEASUREMENTS,
+  ...ASSAM_MEASUREMENTS,
   ...UP_MEASUREMENTS,
-  ...JHARKHAND_MEASUREMENTS
+  ...KERALA_MEASUREMENTS,
+  ...ODISHA_MEASUREMENTS,
+  ...BASE_SAMPLE_MEASUREMENTS
 ];
 
 // ─── Sample States ────────────────────────────────────────────────────────────
@@ -207,14 +219,59 @@ export const INDIAN_STATES: State[] = [
     ]
   },
   { id: "pb", slug: "punjab", name: "Punjab", capital: "Chandigarh", region: "North India", language: "Punjabi", measurement_count: 29 },
-  { id: "wb", slug: "west-bengal", name: "West Bengal", capital: "Kolkata", region: "East India", language: "Bengali", measurement_count: 48 },
-  { id: "od", slug: "odisha", name: "Odisha", capital: "Bhubaneswar", region: "East India", language: "Odia", measurement_count: 33 },
-  { id: "kl", slug: "kerala", name: "Kerala", capital: "Thiruvananthapuram", region: "South India", language: "Malayalam", measurement_count: 41 },
+  {
+    id: "wb",
+    slug: "west-bengal",
+    name: "West Bengal",
+    capital: "Kolkata",
+    region: "East India",
+    language: "Bengali",
+    description: "West Bengal possesses a rich indigenous metrological heritage documented across 13 distinct sectors including Trade & Commerce, Textile & Handloom (Jamdani & Baluchari silk), Medicine (Ayurveda/Kobirai), Construction & Architecture (Terracotta temples), Transportation & Distance, Land Measurement (Chatak, Katha, Bigha), Livestock & Dairy, Household & Daily Life (Sherpai/Kunke bowls), Gold & Jewellery (Bhori/Roti system), Seed & Crop Agriculture, Currency & Money (Kori cowrie ladder, Tanka), Storage & Transportation (Gola granaries, Nouka-bhar boatloads), and Religious & Cultural Sectors (Panjika almanac).",
+    measurement_count: 69
+  },
+  { id: "od", slug: "odisha", name: "Odisha", capital: "Bhubaneswar", region: "East India", language: "Odia", measurement_count: 49 },
+  { id: "kl", slug: "kerala", name: "Kerala", capital: "Thiruvananthapuram", region: "South India", language: "Malayalam", measurement_count: 201 },
   { id: "tr", slug: "tripura", name: "Tripura", capital: "Agartala", region: "Northeast India", language: "Bengali / Kokborok", measurement_count: 14 },
-  { id: "br", slug: "bihar", name: "Bihar", capital: "Patna", region: "East India", language: "Hindi / Maithili", measurement_count: 32 },
+  {
+    id: "br",
+    slug: "bihar",
+    name: "Bihar",
+    capital: "Patna",
+    region: "East India",
+    language: "Hindi / Bhojpuri / Maithili / Magahi",
+    description: "Bihar possesses a deep metrological heritage documented across 13 major sectors including Trade & Commerce (Mauryan punch-marked coinage at Pataliputra, Karshapana, Satamana), Textile & Handloom (Bhagalpuri Tussar silk & Mithila Madhubani art), Medicine (Nalanda Mahavihara Ayurvedic Metrology, Karsha, Kudava, Prastha), Construction & Architecture (Arthashastra specifications for Mauryan Pataliputra, Dhanus, Danda, Lagga), Transportation & Distance (Ashokan royal highway Uttarapatha rest-stops, Yojana, Kos, Manzil), Land Measurement (Dhurki, Dhur, Kattha, Bigha), Livestock & Dairy, Household & Daily Life, Gold & Jewellery, Seed & Crop Agriculture, Currency & Money, Storage & Transportation (Patna's Golghar granary), and Religious & Cultural Sectors.",
+    measurement_count: 100,
+    districts: [
+      { id: "ptn", slug: "patna", name: "Patna (Pataliputra)", state_id: "br", measurement_count: 24 },
+      { id: "bgp", slug: "bhagalpur", name: "Bhagalpur (Anga)", state_id: "br", measurement_count: 18 },
+      { id: "gya", slug: "gaya", name: "Gaya / Bodh Gaya", state_id: "br", measurement_count: 16 },
+      { id: "nld", slug: "nalanda", name: "Nalanda / Rajgir", state_id: "br", measurement_count: 14 },
+      { id: "mfp", slug: "muzaffarpur", name: "Muzaffarpur (Tirhut)", state_id: "br", measurement_count: 12 },
+      { id: "dbg", slug: "darbhanga", name: "Darbhanga (Mithila)", state_id: "br", measurement_count: 10 },
+      { id: "ssm", slug: "sasaram", name: "Sasaram (Rohtas)", state_id: "br", measurement_count: 6 }
+    ]
+  },
   { id: "mp", slug: "madhya-pradesh", name: "Madhya Pradesh", capital: "Bhopal", region: "Central India", language: "Hindi", measurement_count: 35 },
-  { id: "as", slug: "assam", name: "Assam", capital: "Dispur", region: "Northeast India", language: "Assamese", measurement_count: 22 },
-  { id: "hr", slug: "haryana", name: "Haryana", capital: "Chandigarh", region: "North India", language: "Haryanvi / Hindi", measurement_count: 25 },
+  {
+    id: "as",
+    slug: "assam",
+    name: "Assam",
+    capital: "Dispur",
+    region: "Northeast India",
+    language: "Assamese / Hindi",
+    description: "Assam possesses a rich indigenous measurement heritage across 10 major sectors documented directly from official land records (Dharitree portal), tea gardens, Muga and Eri silk weaving, Ahom-era architecture, livestock dairies, goldsmith trade (Bhori system), and Brahmaputra riverways.",
+    measurement_count: 65
+  },
+  {
+    id: "hr",
+    slug: "haryana",
+    name: "Haryana",
+    capital: "Chandigarh",
+    region: "North India",
+    language: "Haryanvi / Hindi",
+    description: "Haryana possesses a rich traditional measurement heritage across 13 major sectors documented directly from official revenue records, agricultural mandis, Panipat handloom weaving traditions, Kos Minar road monuments, livestock dairies, goldsmith trade, currency systems, granary storage, religious rituals, and Ayurvedic metrology.",
+    measurement_count: 58
+  },
   { id: "hp", slug: "himachal-pradesh", name: "Himachal Pradesh", capital: "Shimla", region: "North India", language: "Hindi / Pahari", measurement_count: 20 },
   { id: "jk", slug: "jammu-and-kashmir", name: "Jammu and Kashmir", capital: "Srinagar / Jammu", region: "North India", language: "Dogri / Kashmiri", measurement_count: 18 },
   {

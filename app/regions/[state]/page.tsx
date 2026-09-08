@@ -16,15 +16,25 @@ export default async function StatePage({
   params: Promise<{ state: string }>;
 }) {
   const { state: stateSlug } = await params;
-
-  const state = INDIAN_STATES.find((s) => s.slug === stateSlug);
+  const decodedStateSlug = decodeURIComponent(stateSlug).toLowerCase().trim();
+  const state = INDIAN_STATES.find(
+    (s) =>
+      s.slug.toLowerCase() === decodedStateSlug ||
+      s.name.toLowerCase() === decodedStateSlug ||
+      s.slug.toLowerCase() === decodedStateSlug.replace(/\s+/g, "-") ||
+      s.name.toLowerCase() === decodedStateSlug.replace(/-/g, " ")
+  );
 
   if (!state) {
     notFound();
   }
 
   const stateMeasurements = SAMPLE_MEASUREMENTS.filter((m) =>
-    m.states?.includes(state.name)
+    m.states?.some(
+      (s) =>
+        s.toLowerCase() === state.name.toLowerCase() ||
+        s.toLowerCase() === state.slug.toLowerCase()
+    )
   );
 
   return (

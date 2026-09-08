@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import Groq from "groq-sdk";
 import { SAMPLE_MEASUREMENTS } from "@/lib/data";
 
-const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY || "dummy-key-for-build" });
 
 // ── Normalise text for fuzzy matching ─────────────────────────────────────────
 function norm(s: string) {

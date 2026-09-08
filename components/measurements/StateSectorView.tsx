@@ -3,13 +3,62 @@
 import { useState, useMemo, useEffect } from "react";
 import { Measurement, Sector } from "@/types";
 import MeasurementCard from "@/components/measurements/MeasurementCard";
-import { Table, LayoutGrid, Sparkles } from "lucide-react";
+import { Table, LayoutGrid, Sparkles, ExternalLink } from "lucide-react";
 
 interface StateSectorViewProps {
   stateName: string;
   measurements: Measurement[];
   sectors: Sector[];
 }
+
+// Canonical ordering for sectors as requested
+const SECTOR_ORDER = [
+  "transportation-distance",
+  "land-measurement",
+  "livestock-dairy",
+  "household",
+  "gold-jewellery",
+  "agriculture",
+  "currency-money",
+  "storage-transport",
+  "religious-cultural",
+  "trade-commerce",
+  "textile-handloom",
+  "medicine",
+  "architecture",
+];
+
+// Display title lookup map for all possible sector keys
+const SECTOR_TITLE_MAP: Record<string, string> = {
+  "transportation-distance": "Transportation & Distance",
+  "trans-dist": "Transportation & Distance",
+  "land-measurement": "Land Measurement",
+  "land": "Land Measurement",
+  "livestock-dairy": "Livestock & Dairy",
+  "dairy": "Livestock & Dairy",
+  "household": "Household & Daily Life",
+  "hh": "Household & Daily Life",
+  "gold-jewellery": "Gold & Jewellery",
+  "gold": "Gold & Jewellery",
+  "agriculture": "Seed & Crop (Agriculture)",
+  "agri": "Seed & Crop (Agriculture)",
+  "seed-crop": "Seed & Crop (Agriculture)",
+  "currency-money": "Currency & Money",
+  "currency": "Currency & Money",
+  "storage-transport": "Storage & Transportation",
+  "storage": "Storage & Transportation",
+  "religious-cultural": "Religious & Cultural",
+  "relig": "Religious & Cultural",
+  "trade-commerce": "Trade & Commerce",
+  "trade": "Trade & Commerce",
+  "textile-handloom": "Textile & Handloom",
+  "textile": "Textile & Handloom",
+  "medicine": "Medicine (Ayurveda)",
+  "med": "Medicine (Ayurveda)",
+  "architecture": "Construction & Architecture",
+  "arch": "Construction & Architecture",
+  "construction": "Construction & Architecture",
+};
 
 export default function StateSectorView({
   stateName,
@@ -24,32 +73,44 @@ export default function StateSectorView({
     setIsMounted(true);
   }, []);
 
-  // Sector name lookup map
+  // Sector display name lookup map
   const sectorNameMap = useMemo(() => {
     const map = new Map<string, string>();
+    // Pre-populate with standard titles
+    Object.entries(SECTOR_TITLE_MAP).forEach(([k, v]) => {
+      map.set(k, v);
+    });
+    // Add dynamically provided sectors from props
     sectors.forEach((s) => {
       map.set(s.slug, s.name);
       map.set(s.id, s.name);
       map.set(s.name.toLowerCase(), s.name);
     });
-    // Explicit overrides for exact sector titles
-    map.set("land-measurement", "Land Measurement");
-    map.set("livestock-dairy", "Livestock & Dairy");
-    map.set("household", "Household & Daily Life");
-    map.set("gold-jewellery", "Gold & Jewellery");
-    map.set("agriculture", "Seed & Crop (Agriculture)");
-    map.set("trade-commerce", "Trade & Commerce");
-    map.set("textile-handloom", "Textile & Handloom");
-    map.set("medicine", "Medicine (Ayurveda)");
-    map.set("architecture", "Construction & Architecture");
-    map.set("transportation-distance", "Transportation & Distance");
-    map.set("currency-money", "Currency & Money");
-    map.set("storage-transport", "Storage & Transportation");
-    map.set("religious-cultural", "Religious & Cultural");
     return map;
   }, [sectors]);
 
-  // Group measurements by sector
+  // Determine local language subtitle based on state name
+  const localLangSubtitle = useMemo(() => {
+    const s = stateName.toLowerCase();
+    if (s.includes("jharkhand")) return "Nagpuri/Sadri";
+    if (s.includes("bihar")) return "Hindi";
+    if (s.includes("haryana")) return "Haryanvi/Hindi";
+    if (s.includes("assam")) return "Assamese/Hindi";
+    if (s.includes("uttar pradesh") || s === "up") return "Hindi/Awadhi";
+    if (s.includes("telangana") || s.includes("andhra")) return "Telugu";
+    if (s.includes("tamil nadu")) return "Tamil";
+    if (s.includes("karnataka")) return "Kannada";
+    if (s.includes("maharashtra")) return "Marathi";
+    if (s.includes("gujarat")) return "Gujarati";
+    if (s.includes("rajasthan")) return "Rajasthani";
+    if (s.includes("bengal")) return "Bengali";
+    if (s.includes("odisha")) return "Odia";
+    if (s.includes("kerala")) return "Malayalam";
+    if (s.includes("punjab")) return "Punjabi";
+    return "Local Language";
+  }, [stateName]);
+
+  // Group measurements by sector key
   const sectorGroups = useMemo(() => {
     const map = new Map<string, Measurement[]>();
     measurements.forEach((m) => {
@@ -62,9 +123,17 @@ export default function StateSectorView({
     return map;
   }, [measurements]);
 
-  // Active sector keys
+  // Active sector keys ordered canonically
   const activeSectorKeys = useMemo(() => {
-    return Array.from(sectorGroups.keys());
+    const keys = Array.from(sectorGroups.keys());
+    return keys.sort((a, b) => {
+      const indexA = SECTOR_ORDER.indexOf(a);
+      const indexB = SECTOR_ORDER.indexOf(b);
+      if (indexA !== -1 && indexB !== -1) return indexA - indexB;
+      if (indexA !== -1) return -1;
+      if (indexB !== -1) return 1;
+      return a.localeCompare(b);
+    });
   }, [sectorGroups]);
 
   // Filtered measurements list
@@ -74,6 +143,11 @@ export default function StateSectorView({
     }
     return sectorGroups.get(selectedSector) || [];
   }, [selectedSector, measurements, sectorGroups]);
+
+  // Dynamic banner title
+  const currentSectorTitle = selectedSector === "all"
+    ? `${stateName} Traditional Measurement Units`
+    : `${sectorNameMap.get(selectedSector) || selectedSector} — ${stateName} Traditional Measurement Units (Small → Large)`;
 
   return (
     <div className="space-y-6 w-full">
@@ -168,24 +242,34 @@ export default function StateSectorView({
       {/* Main Measurements Display (Excel Data Table vs Cards) */}
       {filtered.length > 0 ? (
         viewMode === "table" ? (
-          /* Excel Data Table Matching Uploaded Spreadsheets (9 Styled Columns) */
+          /* Spreadsheet Excel Data Table Matching Uploaded Spreadsheets (9 Styled Columns) */
           <div className="bg-white border border-[#E8DED1] rounded-xl shadow-sm overflow-hidden w-full">
+            {/* Dark Burgundy Header Banner Bar */}
+            <div className="bg-[#7A282B] text-white px-5 py-3 font-serif font-bold text-sm flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#601F22]">
+              <span>{currentSectorTitle}</span>
+              <span className="text-xs font-sans font-normal text-[#F3D5D7] bg-[#5C1D20] px-2.5 py-0.5 rounded-full border border-[#8B3538] self-start sm:self-auto">
+                {filtered.length} {filtered.length === 1 ? "Unit" : "Units"}
+              </span>
+            </div>
+
             <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs border-collapse min-w-[760px]">
+              <table className="w-full text-left text-xs border-collapse min-w-[960px]">
                 <thead>
-                  <tr className="bg-[#4A3426] text-white font-semibold border-b border-[#36251B]">
-                    <th className="py-3.5 px-3 w-10 text-center border-r border-[#5C4232]">#</th>
-                    <th className="py-3.5 px-4 font-bold border-r border-[#5C4232]">Unit Name</th>
-                    <th className="py-3.5 px-4 border-r border-[#5C4232]">Sanskrit Name</th>
-                    <th className="py-3.5 px-4 border-r border-[#5C4232]">
-                      Local Language Name <br />
-                      <span className="text-[10px] text-[#D8C8B8] font-normal">(Nagpuri/Sadri)</span>
+                  <tr className="bg-[#802426] text-white font-semibold border-b border-[#671C1E] divide-x divide-[#9C3A3C]">
+                    <th className="py-3.5 px-3 w-10 text-center">#</th>
+                    <th className="py-3.5 px-4 font-bold min-w-[120px]">Unit Name</th>
+                    <th className="py-3.5 px-4 min-w-[130px]">Sanskrit Name</th>
+                    <th className="py-3.5 px-4 min-w-[150px]">
+                      Local Language Name
+                      <span className="block text-[10px] text-[#E5C4C5] font-normal font-sans mt-0.5">
+                        ({localLangSubtitle})
+                      </span>
                     </th>
-                    <th className="py-3.5 px-4 border-r border-[#5C4232]">Hindi Name</th>
-                    <th className="py-3.5 px-3 border-r border-[#5C4232]">Type / Category</th>
-                    <th className="py-3.5 px-4 border-r border-[#5C4232]">Approx. Modern Equivalent</th>
-                    <th className="py-3.5 px-4 border-r border-[#5C4232]">Relation / Hierarchy</th>
-                    <th className="py-3.5 px-4">Used In / Context</th>
+                    <th className="py-3.5 px-4 min-w-[110px]">Hindi Name</th>
+                    <th className="py-3.5 px-3 min-w-[110px]">Type / Category</th>
+                    <th className="py-3.5 px-4 min-w-[140px]">Approx. Modern Equivalent</th>
+                    <th className="py-3.5 px-4 min-w-[140px]">Relation / Hierarchy</th>
+                    <th className="py-3.5 px-4 min-w-[220px]">Used In / Context and Reference</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-[#E8DED1] text-[#2E2A26]">
@@ -193,59 +277,78 @@ export default function StateSectorView({
                     <tr
                       key={m.id}
                       className={`${
-                        idx % 2 === 0 ? "bg-white" : "bg-[#FDFBF7]"
-                      } hover:bg-[#F5EFE6] transition-colors`}
+                        idx % 2 === 0 ? "bg-white" : "bg-[#FDF3ED]"
+                      } hover:bg-[#F5E6DA] transition-colors divide-x divide-[#E8DED1]`}
                     >
                       {/* # */}
-                      <td className="py-3.5 px-3 text-center font-semibold text-[#8B7355] border-r border-[#E8DED1]">
+                      <td className="py-3.5 px-3 text-center font-bold text-[#802426]">
                         {idx + 1}
                       </td>
 
                       {/* Unit Name */}
-                      <td className="py-3.5 px-4 font-bold text-[#2E2A26] border-r border-[#E8DED1]">
+                      <td className="py-3.5 px-4 font-bold text-[#2E2A26]">
                         {m.name_english}
                       </td>
 
                       {/* Sanskrit Name */}
-                      <td className="py-3.5 px-4 text-[#5C5248] border-r border-[#E8DED1]">
+                      <td className="py-3.5 px-4 text-[#4A3E39]">
                         {m.name_sanskrit || "—"}
                       </td>
 
                       {/* Local Language Name */}
-                      <td className="py-3.5 px-4 text-[#2E2A26] font-medium border-r border-[#E8DED1]">
+                      <td className="py-3.5 px-4 text-[#2E2A26] font-medium">
                         {m.local_names && m.local_names.length > 0
                           ? m.local_names.join(", ")
                           : "—"}
                       </td>
 
                       {/* Hindi Name */}
-                      <td className="py-3.5 px-4 text-[#2E2A26] border-r border-[#E8DED1]">
+                      <td className="py-3.5 px-4 text-[#2E2A26]">
                         {m.name_hindi || "—"}
                       </td>
 
                       {/* Type / Category */}
-                      <td className="py-3.5 px-3 capitalize border-r border-[#E8DED1]">
-                        <span className="inline-block px-2.5 py-0.5 rounded bg-[#FAF7F2] text-[#6F4E37] font-medium border border-[#E8DED1]">
+                      <td className="py-3.5 px-3 capitalize">
+                        <span className="inline-block px-2.5 py-0.5 rounded text-[11px] font-semibold bg-[#FAF0E6] text-[#7A282B] border border-[#E8DED1]">
                           {m.category}
                         </span>
                       </td>
 
                       {/* Approx. Modern Equivalent */}
-                      <td className="py-3.5 px-4 text-[#4A3426] font-mono text-[11px] border-r border-[#E8DED1]">
+                      <td className="py-3.5 px-4 text-[#7A282B] font-mono text-[11px] font-semibold">
                         {m.modern_equivalent || "—"}
                       </td>
 
                       {/* Relation / Hierarchy */}
-                      <td className="py-3.5 px-4 text-[#5C5248] border-r border-[#E8DED1]">
+                      <td className="py-3.5 px-4 text-[#4A3E39] text-[11px]">
                         {m.conversion_formula ||
                           (m.hierarchy && m.hierarchy.length > 0
                             ? m.hierarchy.map((h) => h.unit).join("; ")
                             : "—")}
                       </td>
 
-                      {/* Used In / Context */}
-                      <td className="py-3.5 px-4 text-[#4A423A] leading-relaxed max-w-xs">
-                        {m.meaning || (m.used_in && m.used_in.join(", ")) || "—"}
+                      {/* Used In / Context and Reference */}
+                      <td className="py-3.5 px-4 text-[#3D3531] text-[11px] leading-relaxed max-w-sm">
+                        <div>
+                          {m.meaning || (m.used_in && m.used_in.join(", ")) || "—"}
+                        </div>
+                        {m.references && m.references.length > 0 && (
+                          <div className="mt-1.5 flex flex-wrap gap-1">
+                            {m.references.map((refUrl, rIdx) => (
+                              <a
+                                key={rIdx}
+                                href={refUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-1 text-[10px] text-[#7A282B] hover:text-[#52181A] hover:underline bg-[#FAF0E6] border border-[#E8DED1] px-1.5 py-0.5 rounded truncate max-w-[200px]"
+                                title={refUrl}
+                              >
+                                <ExternalLink className="w-2.5 h-2.5 flex-shrink-0" />
+                                <span className="truncate">{refUrl}</span>
+                              </a>
+                            ))}
+                          </div>
+                        )}
                       </td>
                     </tr>
                   ))}
@@ -271,3 +374,4 @@ export default function StateSectorView({
     </div>
   );
 }
+

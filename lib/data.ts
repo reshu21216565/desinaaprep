@@ -7,6 +7,12 @@ import { ASSAM_MEASUREMENTS } from "@/lib/assamData";
 import { WEST_BENGAL_MEASUREMENTS } from "@/lib/westBengalData";
 import { KERALA_MEASUREMENTS } from "@/lib/keralaData";
 import { ODISHA_MEASUREMENTS } from "@/lib/odishaData";
+import { TRIPURA_MEASUREMENTS } from "@/lib/tripuraData";
+import { ARUNACHAL_PRADESH_MEASUREMENTS } from "@/lib/arunachalPradeshData";
+import { MANIPUR_MEASUREMENTS } from "@/lib/manipurData";
+import { PUNJAB_MEASUREMENTS } from "@/lib/punjabData";
+import { MEGHALAYA_MEASUREMENTS } from "@/lib/meghalayaData";
+import { NAGALAND_MEASUREMENTS } from "@/lib/nagalandData";
 
 // ─── Base Sample Measurements ──────────────────────────────────────────────────
 
@@ -168,6 +174,12 @@ export const SAMPLE_MEASUREMENTS: Measurement[] = [
   ...UP_MEASUREMENTS,
   ...KERALA_MEASUREMENTS,
   ...ODISHA_MEASUREMENTS,
+  ...TRIPURA_MEASUREMENTS,
+  ...ARUNACHAL_PRADESH_MEASUREMENTS,
+  ...MANIPUR_MEASUREMENTS,
+  ...PUNJAB_MEASUREMENTS,
+  ...MEGHALAYA_MEASUREMENTS,
+  ...NAGALAND_MEASUREMENTS,
   ...BASE_SAMPLE_MEASUREMENTS
 ];
 
@@ -218,7 +230,16 @@ export const INDIAN_STATES: State[] = [
       { id: "mth", slug: "mathura", name: "Mathura", state_id: "up", measurement_count: 8 }
     ]
   },
-  { id: "pb", slug: "punjab", name: "Punjab", capital: "Chandigarh", region: "North India", language: "Punjabi", measurement_count: 29 },
+  {
+    id: "pb",
+    slug: "punjab",
+    name: "Punjab",
+    capital: "Chandigarh",
+    region: "North India",
+    language: "Punjabi",
+    description: "Punjab possesses a distinct traditional metrological heritage shaped by the Sikh Empire of Maharaja Ranjit Singh, Lahore and Amritsar mint coinages (Nanakshahi Rupee, Falus, Dhela, Paisa), Grand Trunk Road travel reckoning (Kos, Karam), iconic Phulkari and Bagh textile traditions, and canal-colony agricultural and survey standards.",
+    measurement_count: 56
+  },
   {
     id: "wb",
     slug: "west-bengal",
@@ -231,7 +252,16 @@ export const INDIAN_STATES: State[] = [
   },
   { id: "od", slug: "odisha", name: "Odisha", capital: "Bhubaneswar", region: "East India", language: "Odia", measurement_count: 49 },
   { id: "kl", slug: "kerala", name: "Kerala", capital: "Thiruvananthapuram", region: "South India", language: "Malayalam", measurement_count: 201 },
-  { id: "tr", slug: "tripura", name: "Tripura", capital: "Agartala", region: "Northeast India", language: "Bengali / Kokborok", measurement_count: 14 },
+  {
+    id: "tr",
+    slug: "tripura",
+    name: "Tripura",
+    capital: "Agartala",
+    region: "Northeast India",
+    language: "Bengali / Kokborok",
+    description: "Tripura possesses a unique metrological heritage blending Manikya dynasty royal court standards (silver Tanka coinage, gold Mohur, palace architecture in Agartala and Neermahal) with customary backstrap-loom textile measurements (GI-tagged Risa, Rignai, Pachra) and indigenous hill reckoning traditions across 19 indigenous tribal communities.",
+    measurement_count: 56
+  },
   {
     id: "br",
     slug: "bihar",
@@ -295,11 +325,48 @@ export const INDIAN_STATES: State[] = [
   { id: "ct", slug: "chhattisgarh", name: "Chhattisgarh", capital: "Raipur", region: "Central India", language: "Chhattisgarhi / Hindi", measurement_count: 21 },
   { id: "ga", slug: "goa", name: "Goa", capital: "Panaji", region: "West India", language: "Konkani", measurement_count: 15 },
   { id: "ut", slug: "uttarakhand", name: "Uttarakhand", capital: "Dehradun", region: "North India", language: "Garhwali / Kumaoni", measurement_count: 24 },
-  { id: "mn", slug: "manipur", name: "Manipur", capital: "Imphal", region: "Northeast India", language: "Meitei", measurement_count: 12 },
-  { id: "ml", slug: "meghalaya", name: "Meghalaya", capital: "Shillong", region: "Northeast India", language: "Khasi / Garo", measurement_count: 11 },
+  {
+    id: "mn",
+    slug: "manipur",
+    name: "Manipur",
+    capital: "Imphal",
+    region: "Northeast India",
+    language: "Meitei / Kokborok",
+    description: "Manipur possesses a distinct traditional metrological system rooted in the Ningthouja/Meitei royal kingdom, centred on the King's arm-span (Sana Lamjel fathom for cloth, land survey, and valley roads), historical bell metal (Sel) and archaic Meitei bronze coinage, Vaishnavite Ayurvedic measures (Ratti, Masha, Karsha, Pala), fine handloom weaving (Moirang Phee, Innaphi, Phanek), and hill-tribal bodily reckoning across Naga and Kuki-Zo communities.",
+    measurement_count: 52
+  },
+  {
+    id: "ml",
+    slug: "meghalaya",
+    name: "Meghalaya",
+    capital: "Shillong",
+    region: "Northeast India",
+    language: "Khasi / Garo",
+    description: "Meghalaya possesses a distinct indigenous metrological heritage rooted in the Khasi, Jaintia (Pnar), and Garo communities. It features living root bridges (Jingkieng Jri) measured by generational growth-time rather than spatial units, centuries-old iron smelting and trade, Ka Ri Tynrap cowrie-shell currencies, Jaintiapur royal silver coinage, Ryndia Eri peace silk weaving, and annual hill-plains barter traditions at Jonbeel Mela.",
+    measurement_count: 37
+  },
   { id: "mz", slug: "mizoram", name: "Mizoram", capital: "Aizawl", region: "Northeast India", language: "Mizo", measurement_count: 10 },
-  { id: "nl", slug: "nagaland", name: "Nagaland", capital: "Kohima", region: "Northeast India", language: "English / Nagamese", measurement_count: 9 },
-  { id: "sk", slug: "sikkim", name: "Sikkim", capital: "Gangtok", region: "Northeast India", language: "Nepali / Bhutia", measurement_count: 10 }
+  {
+    id: "nl",
+    slug: "nagaland",
+    name: "Nagaland",
+    capital: "Kohima",
+    region: "Northeast India",
+    language: "Naga tribal / English",
+    description: "Nagaland possesses a distinct indigenous metrological and material heritage across 16+ Naga tribes. It features pre-colonial barter and commodity currencies (conch shells, iron, and Assamese Chabili trade knives), achievement-graded social shawls (Angami Lohe, Lotha Lungpensu stone-dragging shawls, and GI-tagged Ao Tsungkotepsu warrior shawls), morung bachelors' dormitory construction, and sophisticated wet-rice terrace engineering at Khonoma.",
+    measurement_count: 40
+  },
+  { id: "sk", slug: "sikkim", name: "Sikkim", capital: "Gangtok", region: "Northeast India", language: "Nepali / Bhutia", measurement_count: 10 },
+  {
+    id: "ar",
+    slug: "arunachal-pradesh",
+    name: "Arunachal Pradesh",
+    capital: "Itanagar",
+    region: "Northeast India",
+    language: "Monpa / Nyishi / Adi / Hindi",
+    description: "Arunachal Pradesh possesses a distinct indigenous metrological heritage reflecting trans-Himalayan Buddhist trade routes in Monyul (Tibetan Skar, Sho, Tangka, Srang coinages, Tawang caravan routes), customary tribal wealth systems (Mithun livestock-as-currency), back-strap loom textile measurements, and informal bodily and material reckoning across Eastern Himalayan hill communities.",
+    measurement_count: 38
+  }
 ];
 
 // ─── Sectors ──────────────────────────────────────────────────────────────────

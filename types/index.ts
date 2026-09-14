@@ -25,6 +25,7 @@ export interface Measurement {
   updated_at?: string;
   historical_period?: string;
   region_applicable?: string;
+  measurement_type?: string;
 }
 
 export type MeasurementCategory =

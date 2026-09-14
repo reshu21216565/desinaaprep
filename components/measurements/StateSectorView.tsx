@@ -92,6 +92,9 @@ export default function StateSectorView({
   // Determine local language subtitle based on state name
   const localLangSubtitle = useMemo(() => {
     const s = stateName.toLowerCase();
+    if (s.includes("arunachal")) return "Monpa/Tibetan";
+    if (s.includes("tripura")) return "Kokborok/Bengali";
+    if (s.includes("manipur")) return "Meitei/Kokborok";
     if (s.includes("jharkhand")) return "Nagpuri/Sadri";
     if (s.includes("bihar")) return "Hindi";
     if (s.includes("haryana")) return "Haryanvi/Hindi";
@@ -107,7 +110,146 @@ export default function StateSectorView({
     if (s.includes("odisha")) return "Odia";
     if (s.includes("kerala")) return "Malayalam";
     if (s.includes("punjab")) return "Punjabi";
+    if (s.includes("meghalaya")) return "Khasi/Garo";
+    if (s.includes("nagaland")) return "Naga tribal";
     return "Local Language";
+  }, [stateName]);
+
+  // Dynamic theme colors matching each state's authentic spreadsheet aesthetic
+  const theme = useMemo(() => {
+    const s = stateName.toLowerCase();
+    if (s.includes("arunachal")) {
+      return {
+        bannerBg: "bg-[#244E33]",
+        bannerBorder: "border-[#183824]",
+        counterBg: "bg-[#183824]",
+        counterText: "text-[#D5EAD9]",
+        counterBorder: "border-[#336844]",
+        headerBg: "bg-[#2E5E3D]",
+        headerBorder: "border-[#1E432A]",
+        headerDivide: "divide-[#417B55]",
+        headerSubtext: "text-[#C2E3CC]",
+        altRowBg: "bg-[#F4F8F5]",
+        hoverRowBg: "hover:bg-[#E9F3EC]",
+        accentText: "text-[#244E33]",
+        badgeBg: "bg-[#EEF6F1]",
+        badgeBorder: "border-[#CFE4D6]",
+        badgeText: "text-[#244E33]",
+      };
+    }
+    if (s.includes("tripura")) {
+      return {
+        bannerBg: "bg-[#4F1E40]",
+        bannerBorder: "border-[#3E1431]",
+        counterBg: "bg-[#3E1431]",
+        counterText: "text-[#F3D5E9]",
+        counterBorder: "border-[#6E285B]",
+        headerBg: "bg-[#5D244D]",
+        headerBorder: "border-[#47173A]",
+        headerDivide: "divide-[#763364]",
+        headerSubtext: "text-[#E8BFDE]",
+        altRowBg: "bg-[#FAF5F8]",
+        hoverRowBg: "hover:bg-[#F3E7EF]",
+        accentText: "text-[#5D244D]",
+        badgeBg: "bg-[#F8EDF4]",
+        badgeBorder: "border-[#E7D3E2]",
+        badgeText: "text-[#5D244D]",
+      };
+    }
+    if (s.includes("manipur")) {
+      return {
+        bannerBg: "bg-[#964B13]",
+        bannerBorder: "border-[#7C3A0A]",
+        counterBg: "bg-[#7C3A0A]",
+        counterText: "text-[#FDECD8]",
+        counterBorder: "border-[#B36324]",
+        headerBg: "bg-[#A35518]",
+        headerBorder: "border-[#823F0C]",
+        headerDivide: "divide-[#B86828]",
+        headerSubtext: "text-[#F8D8B6]",
+        altRowBg: "bg-[#FDF8F2]",
+        hoverRowBg: "hover:bg-[#F8EEE0]",
+        accentText: "text-[#964B13]",
+        badgeBg: "bg-[#FAF0E4]",
+        badgeBorder: "border-[#ECD1B8]",
+        badgeText: "text-[#964B13]",
+      };
+    }
+    if (s.includes("punjab")) {
+      return {
+        bannerBg: "bg-[#996300]",
+        bannerBorder: "border-[#7A4E00]",
+        counterBg: "bg-[#7A4E00]",
+        counterText: "text-[#FEF3D6]",
+        counterBorder: "border-[#B37700]",
+        headerBg: "bg-[#A86E04]",
+        headerBorder: "border-[#855500]",
+        headerDivide: "divide-[#C2820A]",
+        headerSubtext: "text-[#FDE7AD]",
+        altRowBg: "bg-[#FDF9F0]",
+        hoverRowBg: "hover:bg-[#F9EED4]",
+        accentText: "text-[#996300]",
+        badgeBg: "bg-[#FBF1D9]",
+        badgeBorder: "border-[#E8D09E]",
+        badgeText: "text-[#996300]",
+      };
+    }
+    if (s.includes("meghalaya")) {
+      return {
+        bannerBg: "bg-[#23492D]",
+        bannerBorder: "border-[#193620]",
+        counterBg: "bg-[#193620]",
+        counterText: "text-[#D3E8D8]",
+        counterBorder: "border-[#32613B]",
+        headerBg: "bg-[#2C5B38]",
+        headerBorder: "border-[#1D4026]",
+        headerDivide: "divide-[#3D774B]",
+        headerSubtext: "text-[#C0E0C7]",
+        altRowBg: "bg-[#F3F8F5]",
+        hoverRowBg: "hover:bg-[#E8F2EC]",
+        accentText: "text-[#23492D]",
+        badgeBg: "bg-[#ECF5EE]",
+        badgeBorder: "border-[#CDE3D3]",
+        badgeText: "text-[#23492D]",
+      };
+    }
+    if (s.includes("nagaland")) {
+      return {
+        bannerBg: "bg-[#7A281E]",
+        bannerBorder: "border-[#5E1E16]",
+        counterBg: "bg-[#5E1E16]",
+        counterText: "text-[#F5D5D1]",
+        counterBorder: "border-[#96382C]",
+        headerBg: "bg-[#8E3226]",
+        headerBorder: "border-[#6B2219]",
+        headerDivide: "divide-[#AA4436]",
+        headerSubtext: "text-[#F8DDD9]",
+        altRowBg: "bg-[#FCF7F6]",
+        hoverRowBg: "hover:bg-[#F7ECEB]",
+        accentText: "text-[#7A281E]",
+        badgeBg: "bg-[#F9ECEB]",
+        badgeBorder: "border-[#E8C5C1]",
+        badgeText: "text-[#7A281E]",
+      };
+    }
+    // Default earthy bronze palette
+    return {
+      bannerBg: "bg-[#4A3426]",
+      bannerBorder: "border-[#3B291D]",
+      counterBg: "bg-[#3B291D]",
+      counterText: "text-[#E8D7C8]",
+      counterBorder: "border-[#624734]",
+      headerBg: "bg-[#5E4231]",
+      headerBorder: "border-[#473022]",
+      headerDivide: "divide-[#755541]",
+      headerSubtext: "text-[#E0CFC2]",
+      altRowBg: "bg-[#FAF7F2]",
+      hoverRowBg: "hover:bg-[#F2ECE2]",
+      accentText: "text-[#5E4231]",
+      badgeBg: "bg-[#F5EFEB]",
+      badgeBorder: "border-[#E2D2C5]",
+      badgeText: "text-[#5E4231]",
+    };
   }, [stateName]);
 
   // Group measurements by sector key
@@ -244,10 +386,10 @@ export default function StateSectorView({
         viewMode === "table" ? (
           /* Spreadsheet Excel Data Table Matching Uploaded Spreadsheets (9 Styled Columns) */
           <div className="bg-white border border-[#E8DED1] rounded-xl shadow-sm overflow-hidden w-full">
-            {/* Dark Burgundy Header Banner Bar */}
-            <div className="bg-[#7A282B] text-white px-5 py-3 font-serif font-bold text-sm flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#601F22]">
+            {/* Header Banner Bar Matching Uploaded Spreadsheets */}
+            <div className={`${theme.bannerBg} text-white px-5 py-3 font-serif font-bold text-sm flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b ${theme.bannerBorder}`}>
               <span>{currentSectorTitle}</span>
-              <span className="text-xs font-sans font-normal text-[#F3D5D7] bg-[#5C1D20] px-2.5 py-0.5 rounded-full border border-[#8B3538] self-start sm:self-auto">
+              <span className={`text-xs font-sans font-normal ${theme.counterText} ${theme.counterBg} px-2.5 py-0.5 rounded-full border ${theme.counterBorder} self-start sm:self-auto`}>
                 {filtered.length} {filtered.length === 1 ? "Unit" : "Units"}
               </span>
             </div>
@@ -255,21 +397,21 @@ export default function StateSectorView({
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs border-collapse min-w-[960px]">
                 <thead>
-                  <tr className="bg-[#802426] text-white font-semibold border-b border-[#671C1E] divide-x divide-[#9C3A3C]">
+                  <tr className={`${theme.headerBg} text-white font-semibold border-b ${theme.headerBorder} divide-x ${theme.headerDivide}`}>
                     <th className="py-3.5 px-3 w-10 text-center">#</th>
                     <th className="py-3.5 px-4 font-bold min-w-[120px]">Unit Name</th>
                     <th className="py-3.5 px-4 min-w-[130px]">Sanskrit Name</th>
                     <th className="py-3.5 px-4 min-w-[150px]">
                       Local Language Name
-                      <span className="block text-[10px] text-[#E5C4C5] font-normal font-sans mt-0.5">
+                      <span className={`block text-[10px] ${theme.headerSubtext} font-normal font-sans mt-0.5`}>
                         ({localLangSubtitle})
                       </span>
                     </th>
                     <th className="py-3.5 px-4 min-w-[110px]">Hindi Name</th>
-                    <th className="py-3.5 px-3 min-w-[110px]">Type / Category</th>
+                    <th className="py-3.5 px-3 min-w-[120px]">Type / Category</th>
                     <th className="py-3.5 px-4 min-w-[140px]">Approx. Modern Equivalent</th>
                     <th className="py-3.5 px-4 min-w-[140px]">Relation / Hierarchy</th>
-                    <th className="py-3.5 px-4 min-w-[220px]">Used In / Context and Reference</th>
+                    <th className="py-3.5 px-4 min-w-[240px]">Used In / Context</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-[#E8DED1] text-[#2E2A26]">
@@ -277,11 +419,11 @@ export default function StateSectorView({
                     <tr
                       key={m.id}
                       className={`${
-                        idx % 2 === 0 ? "bg-white" : "bg-[#FDF3ED]"
-                      } hover:bg-[#F5E6DA] transition-colors divide-x divide-[#E8DED1]`}
+                        idx % 2 === 0 ? "bg-white" : theme.altRowBg
+                      } ${theme.hoverRowBg} transition-colors divide-x divide-[#E8DED1]`}
                     >
                       {/* # */}
-                      <td className="py-3.5 px-3 text-center font-bold text-[#802426]">
+                      <td className={`py-3.5 px-3 text-center font-bold ${theme.accentText}`}>
                         {idx + 1}
                       </td>
 
@@ -308,14 +450,14 @@ export default function StateSectorView({
                       </td>
 
                       {/* Type / Category */}
-                      <td className="py-3.5 px-3 capitalize">
-                        <span className="inline-block px-2.5 py-0.5 rounded text-[11px] font-semibold bg-[#FAF0E6] text-[#7A282B] border border-[#E8DED1]">
-                          {m.category}
+                      <td className="py-3.5 px-3">
+                        <span className={`inline-block px-2.5 py-0.5 rounded text-[11px] font-semibold ${theme.badgeBg} ${theme.badgeText} border ${theme.badgeBorder}`}>
+                          {m.measurement_type || m.category}
                         </span>
                       </td>
 
                       {/* Approx. Modern Equivalent */}
-                      <td className="py-3.5 px-4 text-[#7A282B] font-mono text-[11px] font-semibold">
+                      <td className={`py-3.5 px-4 ${theme.accentText} font-mono text-[11px] font-semibold`}>
                         {m.modern_equivalent || "—"}
                       </td>
 
@@ -328,25 +470,46 @@ export default function StateSectorView({
                       </td>
 
                       {/* Used In / Context and Reference */}
-                      <td className="py-3.5 px-4 text-[#3D3531] text-[11px] leading-relaxed max-w-sm">
-                        <div>
+                      <td className="py-3.5 px-4 text-[#3D3531] text-[11px] leading-relaxed max-w-md">
+                        <div className="text-[#2E2A26]">
                           {m.meaning || (m.used_in && m.used_in.join(", ")) || "—"}
                         </div>
+                        {m.historical_period && (
+                          <div className="mt-1 text-[10px] text-[#6B5E55]">
+                            <span className="font-semibold text-[#4A3E39]">Historical Period:</span>{" "}
+                            {m.historical_period}
+                          </div>
+                        )}
+                        {m.region_applicable && (
+                          <div className="mt-0.5 text-[10px] text-[#6B5E55]">
+                            <span className="font-semibold text-[#4A3E39]">Region:</span>{" "}
+                            {m.region_applicable}
+                          </div>
+                        )}
                         {m.references && m.references.length > 0 && (
                           <div className="mt-1.5 flex flex-wrap gap-1">
-                            {m.references.map((refUrl, rIdx) => (
-                              <a
-                                key={rIdx}
-                                href={refUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center gap-1 text-[10px] text-[#7A282B] hover:text-[#52181A] hover:underline bg-[#FAF0E6] border border-[#E8DED1] px-1.5 py-0.5 rounded truncate max-w-[200px]"
-                                title={refUrl}
-                              >
-                                <ExternalLink className="w-2.5 h-2.5 flex-shrink-0" />
-                                <span className="truncate">{refUrl}</span>
-                              </a>
-                            ))}
+                            {m.references.map((refUrl, rIdx) =>
+                              refUrl.startsWith("http") ? (
+                                <a
+                                  key={rIdx}
+                                  href={refUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className={`inline-flex items-center gap-1 text-[10px] ${theme.badgeText} hover:underline ${theme.badgeBg} border ${theme.badgeBorder} px-1.5 py-0.5 rounded truncate max-w-[220px]`}
+                                  title={refUrl}
+                                >
+                                  <ExternalLink className="w-2.5 h-2.5 flex-shrink-0" />
+                                  <span className="truncate">{refUrl}</span>
+                                </a>
+                              ) : (
+                                <span
+                                  key={rIdx}
+                                  className="text-[10px] text-[#7A6E65] italic bg-[#F5EFE8] px-1.5 py-0.5 rounded border border-[#E8DED1]"
+                                >
+                                  {refUrl}
+                                </span>
+                              )
+                            )}
                           </div>
                         )}
                       </td>

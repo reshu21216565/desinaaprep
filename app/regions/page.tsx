@@ -20,7 +20,7 @@ const REGIONS = [
   },
   {
     name: "North India",
-    states: ["Uttar Pradesh", "Punjab"],
+    states: ["Uttar Pradesh", "Punjab", "Haryana", "Himachal Pradesh", "Uttarakhand"],
   },
   {
     name: "East India",
@@ -28,7 +28,7 @@ const REGIONS = [
   },
   {
     name: "Northeast India",
-    states: ["Arunachal Pradesh", "Tripura", "Assam", "Manipur"],
+    states: ["Arunachal Pradesh", "Tripura", "Assam", "Manipur", "Meghalaya", "Nagaland", "Sikkim"],
   },
   {
     name: "Central India",

@@ -6,6 +6,7 @@ import FloatingMascot from "@/components/ui/FloatingMascot";
 import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://desinaap.vercel.app"),
   title: { default: "DESINAAP – Traditional Measurements Re-Coded", template: "%s | DESINAAP" },
   description: "A digital platform for documenting, preserving, and exploring India's traditional measurement systems.",
   keywords: ["Indian measurements", "traditional units", "IKS", "Vedic measurements", "Telugu measurements"],

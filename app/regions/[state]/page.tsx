@@ -17,12 +17,36 @@ export default async function StatePage({
 }) {
   const { state: stateSlug } = await params;
   const decodedStateSlug = decodeURIComponent(stateSlug).toLowerCase().trim();
+  
+  const STATE_ALIASES: Record<string, string> = {
+    "gujarath": "gujarat",
+    "uttarkhand": "uttarakhand",
+    "uttara-khand": "uttarakhand",
+    "himachal": "himachal-pradesh",
+    "wb": "west-bengal",
+    "up": "uttar-pradesh",
+    "mp": "madhya-pradesh",
+    "ap": "andhra-pradesh",
+    "ts": "telangana",
+    "tn": "tamil-nadu",
+    "tamilnadu": "tamil-nadu",
+    "orissa": "odisha",
+    "jk": "jammu-and-kashmir",
+    "rj": "rajasthan",
+  };
+
+  const normalizedSlug = STATE_ALIASES[decodedStateSlug] || STATE_ALIASES[decodedStateSlug.replace(/\s+/g, "-")] || decodedStateSlug;
+
   const state = INDIAN_STATES.find(
     (s) =>
       s.slug.toLowerCase() === decodedStateSlug ||
       s.name.toLowerCase() === decodedStateSlug ||
+      s.slug.toLowerCase() === normalizedSlug ||
+      s.name.toLowerCase() === normalizedSlug ||
       s.slug.toLowerCase() === decodedStateSlug.replace(/\s+/g, "-") ||
-      s.name.toLowerCase() === decodedStateSlug.replace(/-/g, " ")
+      s.name.toLowerCase() === decodedStateSlug.replace(/-/g, " ") ||
+      s.slug.toLowerCase() === normalizedSlug.replace(/\s+/g, "-") ||
+      s.name.toLowerCase() === normalizedSlug.replace(/-/g, " ")
   );
 
   if (!state) {

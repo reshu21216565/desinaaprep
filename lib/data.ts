@@ -13,6 +13,13 @@ import { MANIPUR_MEASUREMENTS } from "@/lib/manipurData";
 import { PUNJAB_MEASUREMENTS } from "@/lib/punjabData";
 import { MEGHALAYA_MEASUREMENTS } from "@/lib/meghalayaData";
 import { NAGALAND_MEASUREMENTS } from "@/lib/nagalandData";
+import { TELANGANA_MEASUREMENTS } from "@/lib/telanganaData";
+import { HIMACHAL_PRADESH_MEASUREMENTS } from "@/lib/himachalPradeshData";
+import { SIKKIM_MEASUREMENTS } from "@/lib/sikkimData";
+import { UTTARAKHAND_MEASUREMENTS } from "@/lib/uttarakhandData";
+import { GUJARAT_MEASUREMENTS } from "@/lib/gujaratData";
+import { RAJASTHAN_MEASUREMENTS } from "@/lib/rajasthanData";
+import { MP_MEASUREMENTS } from "@/lib/mpData";
 
 // ─── Base Sample Measurements ──────────────────────────────────────────────────
 
@@ -33,7 +40,7 @@ const BASE_SAMPLE_MEASUREMENTS: Measurement[] = [
       "The Angula is one of the oldest units of measurement in Indian history, dating back to the Vedic era. It appears extensively in Vastu Shastra texts and was standardised across multiple ancient treatises including the Arthashastra of Kautilya and the Manasara.",
     modern_equivalent: "~1.763 cm (varies by text)",
     conversion_formula: "1 Angula ≈ 1.763 cm; 24 Angulas = 1 Hasta",
-    states: ["Telangana", "Andhra Pradesh", "Karnataka", "Tamil Nadu"],
+    states: ["Andhra Pradesh", "Karnataka", "Tamil Nadu"],
     districts: ["Hyderabad", "Warangal", "Vijayawada"],
     used_in: ["Temple construction", "Vastu Shastra", "Sculpture", "Town planning"],
     hierarchy: [
@@ -61,7 +68,7 @@ const BASE_SAMPLE_MEASUREMENTS: Measurement[] = [
       "The Hasta (cubit) was the primary unit of length in ancient Indian construction. Mentioned in both Rigveda and later architectural texts, it was used to plan everything from domestic houses to grand temple complexes. The Arthashastra mentions it as a standard for public works.",
     modern_equivalent: "~45 cm (24 Angulas)",
     conversion_formula: "1 Hasta = 24 Angulas ≈ 45 cm; 4 Hasta = 1 Danda",
-    states: ["Telangana", "Andhra Pradesh", "Tamil Nadu", "Karnataka", "Maharashtra"],
+    states: ["Andhra Pradesh", "Tamil Nadu", "Karnataka", "Maharashtra"],
     used_in: ["Temple architecture", "Agricultural land measurement", "Textile"],
     hierarchy: [
       { name: "Angula", relation: "smaller", value: 24, unit: "Angula = 1 Hasta" },
@@ -87,7 +94,7 @@ const BASE_SAMPLE_MEASUREMENTS: Measurement[] = [
       "The Mana was widely used across the Deccan for measuring paddy, jowar, and other grains. It was particularly prevalent in Telangana and was used as a standard unit in local markets well into the 20th century. Different districts had varying sizes of Mana.",
     modern_equivalent: "~2 to 4 kg (varies by district)",
     conversion_formula: "1 Mana ≈ 2-4 kg; 8 Mana = 1 Kula; 40 Mana = 1 Khanduga",
-    states: ["Telangana", "Andhra Pradesh", "Karnataka"],
+    states: ["Andhra Pradesh", "Karnataka"],
     districts: ["Nalgonda", "Khammam", "Medak", "Nizamabad"],
     used_in: ["Grain measurement", "Market trade", "Revenue collection"],
     hierarchy: [
@@ -113,7 +120,7 @@ const BASE_SAMPLE_MEASUREMENTS: Measurement[] = [
       "The Khanduga was used as the unit for bulk grain transactions and revenue assessments. Nizam-era records refer to it in land revenue calculations. Village accountants (Patwaris) maintained records in Khandugas.",
     modern_equivalent: "~80-160 kg (varies)",
     conversion_formula: "1 Khanduga = 40 Mana ≈ 80-160 kg",
-    states: ["Telangana", "Andhra Pradesh"],
+    states: ["Andhra Pradesh"],
     used_in: ["Revenue collection", "Bulk grain trade", "Land assessment"],
     tags: ["grain", "revenue", "nizam", "telangana"],
     created_at: "2024-01-01"
@@ -134,7 +141,7 @@ const BASE_SAMPLE_MEASUREMENTS: Measurement[] = [
       "The Tola was standardised by the Mughal empire as the weight of a silver rupee. It was used extensively in trade, jewellery, and medicine across the Indian subcontinent. The British later defined 1 Tola = 180 grains troy = 11.664 grams.",
     modern_equivalent: "11.664 grams",
     conversion_formula: "1 Tola = 12 Mashas = 180 grains troy = 11.664 grams",
-    states: ["Telangana", "Andhra Pradesh", "Maharashtra", "Gujarat", "Rajasthan"],
+    states: ["Andhra Pradesh", "Maharashtra"],
     used_in: ["Gold & silver trade", "Ayurvedic medicine", "Spice trade"],
     hierarchy: [
       { name: "Masha", relation: "smaller", value: 12, unit: "Masha = 1 Tola" },
@@ -158,7 +165,7 @@ const BASE_SAMPLE_MEASUREMENTS: Measurement[] = [
       "The Kani was used in Tamil Nadu and Andhra for land measurement. It was part of a complex system of area units used in agricultural land records maintained by the British and Nizam governments.",
     modern_equivalent: "~0.33 acres (varies by region)",
     conversion_formula: "1 Kani ≈ 1/3 acre; 3 Kani = 1 Acre (approximately)",
-    states: ["Telangana", "Andhra Pradesh", "Tamil Nadu"],
+    states: ["Andhra Pradesh", "Tamil Nadu"],
     used_in: ["Land records", "Agriculture", "Revenue"],
     tags: ["land", "area", "agriculture", "revenue"],
     created_at: "2024-01-01"
@@ -180,6 +187,13 @@ export const SAMPLE_MEASUREMENTS: Measurement[] = [
   ...PUNJAB_MEASUREMENTS,
   ...MEGHALAYA_MEASUREMENTS,
   ...NAGALAND_MEASUREMENTS,
+  ...TELANGANA_MEASUREMENTS,
+  ...HIMACHAL_PRADESH_MEASUREMENTS,
+  ...SIKKIM_MEASUREMENTS,
+  ...UTTARAKHAND_MEASUREMENTS,
+  ...GUJARAT_MEASUREMENTS,
+  ...RAJASTHAN_MEASUREMENTS,
+  ...MP_MEASUREMENTS,
   ...BASE_SAMPLE_MEASUREMENTS
 ];
 
@@ -195,7 +209,7 @@ export const INDIAN_STATES: State[] = [
     language: "Telugu",
     description:
       "Telangana, carved out as India's 29th state in 2014, has a rich tradition of indigenous measurement systems shaped by Kakatiya, Bahmani, and Nizam-era administrations. The region's agricultural heritage is reflected in unique grain measures like Mana and Khanduga.",
-    measurement_count: 42,
+    measurement_count: 161,
     districts: [
       { id: "hyd", slug: "hyderabad", name: "Hyderabad", state_id: "ts", measurement_count: 18 },
       { id: "wgl", slug: "warangal", name: "Warangal", state_id: "ts", measurement_count: 12 },
@@ -211,8 +225,26 @@ export const INDIAN_STATES: State[] = [
   { id: "tn", slug: "tamil-nadu", name: "Tamil Nadu", capital: "Chennai", region: "South India", language: "Tamil", measurement_count: 55 },
   { id: "ka", slug: "karnataka", name: "Karnataka", capital: "Bengaluru", region: "South India", language: "Kannada", measurement_count: 47 },
   { id: "mh", slug: "maharashtra", name: "Maharashtra", capital: "Mumbai", region: "West India", language: "Marathi", measurement_count: 52 },
-  { id: "gj", slug: "gujarat", name: "Gujarat", capital: "Gandhinagar", region: "West India", language: "Gujarati", measurement_count: 44 },
-  { id: "rj", slug: "rajasthan", name: "Rajasthan", capital: "Jaipur", region: "North India", language: "Rajasthani", measurement_count: 39 },
+  {
+    id: "gj",
+    slug: "gujarat",
+    name: "Gujarat",
+    capital: "Gandhinagar",
+    region: "West India",
+    language: "Gujarati",
+    description: "Gujarat possesses a rich indigenous metrological heritage documented across 12 key sectors including Agriculture, Trade & Commerce, Construction & Architecture, Medicine (Ayurveda), Textile & Handloom, Currency & Money, Household & Daily Life, Storage & Transportation, Land Measurement, Transportation & Distance, Livestock & Dairy, and Gold & Jewellery.",
+    measurement_count: 199
+  },
+  {
+    id: "rj",
+    slug: "rajasthan",
+    name: "Rajasthan",
+    capital: "Jaipur",
+    region: "North India",
+    language: "Rajasthani",
+    description: "Rajasthan possesses a vast traditional metrological heritage documented across 12 distinct sectors including Seed & Crop (Agriculture), Trade & Commerce, Construction & Architecture, Medicine (Ayurveda), Textile & Handloom, Currency & Money, Household & Daily Life, Storage & Transportation, Land Measurement, Transportation & Distance, Livestock & Dairy, and Gold & Jewellery.",
+    measurement_count: 221
+  },
   {
     id: "up",
     slug: "uttar-pradesh",
@@ -281,7 +313,16 @@ export const INDIAN_STATES: State[] = [
       { id: "ssm", slug: "sasaram", name: "Sasaram (Rohtas)", state_id: "br", measurement_count: 6 }
     ]
   },
-  { id: "mp", slug: "madhya-pradesh", name: "Madhya Pradesh", capital: "Bhopal", region: "Central India", language: "Hindi", measurement_count: 35 },
+  {
+    id: "mp",
+    slug: "madhya-pradesh",
+    name: "Madhya Pradesh",
+    capital: "Bhopal",
+    region: "Central India",
+    language: "Hindi",
+    description: "Madhya Pradesh possesses a rich traditional metrological heritage documented across 12 major sectors including Transportation & Distance, Land Measurement, Livestock & Dairy, Household & Daily Life, Gold & Jewellery, Seed & Crop (Agriculture), Currency & Money, Storage & Transportation, Trade & Commerce, Textile & Handloom, Medicine (Ayurveda), and Construction & Architecture.",
+    measurement_count: 92
+  },
   {
     id: "as",
     slug: "assam",
@@ -302,7 +343,16 @@ export const INDIAN_STATES: State[] = [
     description: "Haryana possesses a rich traditional measurement heritage across 13 major sectors documented directly from official revenue records, agricultural mandis, Panipat handloom weaving traditions, Kos Minar road monuments, livestock dairies, goldsmith trade, currency systems, granary storage, religious rituals, and Ayurvedic metrology.",
     measurement_count: 58
   },
-  { id: "hp", slug: "himachal-pradesh", name: "Himachal Pradesh", capital: "Shimla", region: "North India", language: "Hindi / Pahari", measurement_count: 20 },
+  {
+    id: "hp",
+    slug: "himachal-pradesh",
+    name: "Himachal Pradesh",
+    capital: "Shimla",
+    region: "North India",
+    language: "Hindi / Pahari",
+    description: "Himachal Pradesh possesses a distinctive Western Himalayan metrological heritage documented across 13 major sectors including Trade & Commerce (Pahari bazaar weights, Ratti, Masha, Tola, Seer, Maund), Textile & Handloom (GI-tagged Kullu and Kinnauri shawls, wool yarn count Nm), Medicine (Ayurveda and Sowa-Rigpa Tibetan Amchi medicine, Srang), Construction & Architecture (Kath-Kuni earthquake-resistant timber-stone wall techniques), Transportation & Distance (Hindustan-Tibet pilgrim routes, Kos, Yojana), Land Measurement (Biswansi, Biswa, Bigha, Marla, Kanal), Livestock & Dairy, Household & Daily Life, Gold & Jewellery, Seed & Crop Agriculture, Currency & Money (ancient Trigarta, Kulluta, Audumbara punch-marked coins, Chamba copper Chakli), Storage & Transportation (Doko baskets, Khachar caravan loads, Kothar granaries), and Religious & Cultural Sectors.",
+    measurement_count: 73
+  },
   { id: "jk", slug: "jammu-and-kashmir", name: "Jammu and Kashmir", capital: "Srinagar / Jammu", region: "North India", language: "Dogri / Kashmiri", measurement_count: 18 },
   {
     id: "jh",
@@ -324,7 +374,16 @@ export const INDIAN_STATES: State[] = [
   },
   { id: "ct", slug: "chhattisgarh", name: "Chhattisgarh", capital: "Raipur", region: "Central India", language: "Chhattisgarhi / Hindi", measurement_count: 21 },
   { id: "ga", slug: "goa", name: "Goa", capital: "Panaji", region: "West India", language: "Konkani", measurement_count: 15 },
-  { id: "ut", slug: "uttarakhand", name: "Uttarakhand", capital: "Dehradun", region: "North India", language: "Garhwali / Kumaoni", measurement_count: 24 },
+  {
+    id: "ut",
+    slug: "uttarakhand",
+    name: "Uttarakhand",
+    capital: "Dehradun",
+    region: "North India",
+    language: "Garhwali / Kumaoni",
+    description: "Uttarakhand possesses a distinctive Himalayan metrological heritage across Garhwal and Kumaon documented across 13 major sectors including Trade & Commerce, Textile & Handloom (Pankhi & Thulma weaving), Medicine (Ayurveda), Architecture (Koti Banal earthquake-resistant construction), Transportation & Distance, Land Measurement (Nali, Mutthi), Livestock & Dairy, Household & Daily Life, Gold & Jewellery, Seed & Crop Agriculture, Currency & Money, Storage & Transportation, and Religious & Cultural Sectors.",
+    measurement_count: 77
+  },
   {
     id: "mn",
     slug: "manipur",
@@ -356,7 +415,16 @@ export const INDIAN_STATES: State[] = [
     description: "Nagaland possesses a distinct indigenous metrological and material heritage across 16+ Naga tribes. It features pre-colonial barter and commodity currencies (conch shells, iron, and Assamese Chabili trade knives), achievement-graded social shawls (Angami Lohe, Lotha Lungpensu stone-dragging shawls, and GI-tagged Ao Tsungkotepsu warrior shawls), morung bachelors' dormitory construction, and sophisticated wet-rice terrace engineering at Khonoma.",
     measurement_count: 40
   },
-  { id: "sk", slug: "sikkim", name: "Sikkim", capital: "Gangtok", region: "Northeast India", language: "Nepali / Bhutia", measurement_count: 10 },
+  {
+    id: "sk",
+    slug: "sikkim",
+    name: "Sikkim",
+    capital: "Gangtok",
+    region: "Northeast India",
+    language: "Nepali / Bhutia / Lepcha",
+    description: "Sikkim possesses a rich traditional metrological system reflecting Namgyal dynasty kingdom practices, trans-Himalayan trade routes, Lepcha and Bhutia indigenous traditions across 13 major sectors including Trade & Commerce, Textile & Handloom, Medicine, Architecture, Distance, Land Survey, Livestock, Daily Life, Gold, Agriculture, Currency, Storage, and Religious Sacred Geography.",
+    measurement_count: 83
+  },
   {
     id: "ar",
     slug: "arunachal-pradesh",

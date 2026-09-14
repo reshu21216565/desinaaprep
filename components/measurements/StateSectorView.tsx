@@ -92,11 +92,13 @@ export default function StateSectorView({
   // Determine local language subtitle based on state name
   const localLangSubtitle = useMemo(() => {
     const s = stateName.toLowerCase();
+    if (s.includes("himachal")) return "Pahari/Kangri/Kinnauri";
     if (s.includes("arunachal")) return "Monpa/Tibetan";
     if (s.includes("tripura")) return "Kokborok/Bengali";
     if (s.includes("manipur")) return "Meitei/Kokborok";
     if (s.includes("jharkhand")) return "Nagpuri/Sadri";
     if (s.includes("bihar")) return "Hindi";
+    if (s.includes("madhya") || s === "mp") return "Hindi";
     if (s.includes("haryana")) return "Haryanvi/Hindi";
     if (s.includes("assam")) return "Assamese/Hindi";
     if (s.includes("uttar pradesh") || s === "up") return "Hindi/Awadhi";
@@ -104,7 +106,7 @@ export default function StateSectorView({
     if (s.includes("tamil nadu")) return "Tamil";
     if (s.includes("karnataka")) return "Kannada";
     if (s.includes("maharashtra")) return "Marathi";
-    if (s.includes("gujarat")) return "Gujarati";
+    if (s.includes("gujarat") || s.includes("gujarath")) return "Gujarati";
     if (s.includes("rajasthan")) return "Rajasthani";
     if (s.includes("bengal")) return "Bengali";
     if (s.includes("odisha")) return "Odia";
@@ -112,12 +114,57 @@ export default function StateSectorView({
     if (s.includes("punjab")) return "Punjabi";
     if (s.includes("meghalaya")) return "Khasi/Garo";
     if (s.includes("nagaland")) return "Naga tribal";
+    if (s.includes("sikkim")) return "Nepali/Bhutia/Lepcha";
+    if (s.includes("uttarakhand") || s.includes("uttarkhand")) return "Kumaoni/Garhwali";
     return "Local Language";
   }, [stateName]);
 
   // Dynamic theme colors matching each state's authentic spreadsheet aesthetic
   const theme = useMemo(() => {
     const s = stateName.toLowerCase();
+    if (s.includes("himachal") || s.includes("uttarakhand") || s.includes("uttarkhand")) {
+      return {
+        bannerBg: "bg-[#1F4E79]",
+        bannerBorder: "border-[#163857]",
+        counterBg: "bg-[#163857]",
+        counterText: "text-[#D8E9F6]",
+        counterBorder: "border-[#2C587D]",
+        headerBg: "bg-[#255C8F]",
+        headerBorder: "border-[#1B446A]",
+        headerDivide: "divide-[#3A72A4]",
+        headerSubtext: "text-[#CCE0F0]",
+        altRowBg: "bg-[#F3F7FA]",
+        hoverRowBg: "hover:bg-[#E8F0F7]",
+        accentText: "text-[#1F4E79]",
+        badgeBg: "bg-[#EDF4F9]",
+        badgeBorder: "border-[#C5DBEC]",
+        badgeText: "text-[#1F4E79]",
+        activeBtn: "bg-[#1F4E79] text-white border-[#1F4E79]",
+        inactiveBtn: "bg-[#FAF7F2] text-[#1F4E79] border-[#D0DFEB] hover:bg-[#1F4E79] hover:text-white hover:border-[#1F4E79]",
+      };
+    }
+    if (s.includes("sikkim")) {
+      return {
+        bannerBg: "bg-[#1E5638]",
+        bannerBorder: "border-[#143D27]",
+        counterBg: "bg-[#143D27]",
+        counterText: "text-[#D3EEDB]",
+        counterBorder: "border-[#296D48]",
+        headerBg: "bg-[#266845]",
+        headerBorder: "border-[#1A4C32]",
+        headerDivide: "divide-[#3A845C]",
+        headerSubtext: "text-[#C2E8CE]",
+        altRowBg: "bg-[#F4F9F6]",
+        hoverRowBg: "hover:bg-[#E9F4ED]",
+        accentText: "text-[#1E5638]",
+        badgeBg: "bg-[#EFF7F2]",
+        badgeBorder: "border-[#CDE5D6]",
+        badgeText: "text-[#1E5638]",
+        activeBtn: "bg-[#1E5638] text-white border-[#1E5638]",
+        inactiveBtn: "bg-[#FAF7F2] text-[#1E5638] border-[#CCE5D5] hover:bg-[#1E5638] hover:text-white hover:border-[#1E5638]",
+      };
+    }
+
     if (s.includes("arunachal")) {
       return {
         bannerBg: "bg-[#244E33]",
@@ -135,6 +182,8 @@ export default function StateSectorView({
         badgeBg: "bg-[#EEF6F1]",
         badgeBorder: "border-[#CFE4D6]",
         badgeText: "text-[#244E33]",
+        activeBtn: "bg-[#244E33] text-white border-[#244E33]",
+        inactiveBtn: "bg-[#FAF7F2] text-[#244E33] border-[#CFE4D6] hover:bg-[#244E33] hover:text-white hover:border-[#244E33]",
       };
     }
     if (s.includes("tripura")) {
@@ -154,6 +203,8 @@ export default function StateSectorView({
         badgeBg: "bg-[#F8EDF4]",
         badgeBorder: "border-[#E7D3E2]",
         badgeText: "text-[#5D244D]",
+        activeBtn: "bg-[#4F1E40] text-white border-[#4F1E40]",
+        inactiveBtn: "bg-[#FAF7F2] text-[#4F1E40] border-[#E7D3E2] hover:bg-[#4F1E40] hover:text-white hover:border-[#4F1E40]",
       };
     }
     if (s.includes("manipur")) {
@@ -173,6 +224,8 @@ export default function StateSectorView({
         badgeBg: "bg-[#FAF0E4]",
         badgeBorder: "border-[#ECD1B8]",
         badgeText: "text-[#964B13]",
+        activeBtn: "bg-[#964B13] text-white border-[#964B13]",
+        inactiveBtn: "bg-[#FAF7F2] text-[#964B13] border-[#ECD1B8] hover:bg-[#964B13] hover:text-white hover:border-[#964B13]",
       };
     }
     if (s.includes("punjab")) {
@@ -192,6 +245,8 @@ export default function StateSectorView({
         badgeBg: "bg-[#FBF1D9]",
         badgeBorder: "border-[#E8D09E]",
         badgeText: "text-[#996300]",
+        activeBtn: "bg-[#996300] text-white border-[#996300]",
+        inactiveBtn: "bg-[#FAF7F2] text-[#996300] border-[#E8D09E] hover:bg-[#996300] hover:text-white hover:border-[#996300]",
       };
     }
     if (s.includes("meghalaya")) {
@@ -211,6 +266,8 @@ export default function StateSectorView({
         badgeBg: "bg-[#ECF5EE]",
         badgeBorder: "border-[#CDE3D3]",
         badgeText: "text-[#23492D]",
+        activeBtn: "bg-[#23492D] text-white border-[#23492D]",
+        inactiveBtn: "bg-[#FAF7F2] text-[#23492D] border-[#CDE3D3] hover:bg-[#23492D] hover:text-white hover:border-[#23492D]",
       };
     }
     if (s.includes("nagaland")) {
@@ -230,9 +287,74 @@ export default function StateSectorView({
         badgeBg: "bg-[#F9ECEB]",
         badgeBorder: "border-[#E8C5C1]",
         badgeText: "text-[#7A281E]",
+        activeBtn: "bg-[#7A281E] text-white border-[#7A281E]",
+        inactiveBtn: "bg-[#FAF7F2] text-[#7A281E] border-[#E8C5C1] hover:bg-[#7A281E] hover:text-white hover:border-[#7A281E]",
       };
     }
-    // Default earthy bronze palette
+    if (s.includes("telangana")) {
+      return {
+        bannerBg: "bg-[#1A456E]",
+        bannerBorder: "border-[#123354]",
+        counterBg: "bg-[#123354]",
+        counterText: "text-[#D4E4F3]",
+        counterBorder: "border-[#275988]",
+        headerBg: "bg-[#21568A]",
+        headerBorder: "border-[#174068]",
+        headerDivide: "divide-[#3572A8]",
+        headerSubtext: "text-[#C7DCF0]",
+        altRowBg: "bg-[#F4F8FB]",
+        hoverRowBg: "hover:bg-[#E9F1F8]",
+        accentText: "text-[#1A456E]",
+        badgeBg: "bg-[#EEF4FA]",
+        badgeBorder: "border-[#C8DCEF]",
+        badgeText: "text-[#1A456E]",
+        activeBtn: "bg-[#1A456E] text-white border-[#1A456E]",
+        inactiveBtn: "bg-[#FAF7F2] text-[#1A456E] border-[#C8DCEF] hover:bg-[#1A456E] hover:text-white hover:border-[#1A456E]",
+      };
+    }
+    if (s.includes("gujarat") || s.includes("gujarath")) {
+      return {
+        bannerBg: "bg-[#1E3A5F]",
+        bannerBorder: "border-[#142740]",
+        counterBg: "bg-[#142740]",
+        counterText: "text-[#D8E6F5]",
+        counterBorder: "border-[#2E5584]",
+        headerBg: "bg-[#254A77]",
+        headerBorder: "border-[#1A375B]",
+        headerDivide: "divide-[#3D6EAA]",
+        headerSubtext: "text-[#CDE1F7]",
+        altRowBg: "bg-[#F4F8FC]",
+        hoverRowBg: "hover:bg-[#EAF1F9]",
+        accentText: "text-[#1E3A5F]",
+        badgeBg: "bg-[#EEF4FB]",
+        badgeBorder: "border-[#C6DCF2]",
+        badgeText: "text-[#1E3A5F]",
+        activeBtn: "bg-[#1E3A5F] text-white border-[#1E3A5F]",
+        inactiveBtn: "bg-[#FAF7F2] text-[#1E3A5F] border-[#C6DCF2] hover:bg-[#1E3A5F] hover:text-white hover:border-[#1E3A5F]",
+      };
+    }
+    if (s.includes("rajasthan")) {
+      return {
+        bannerBg: "bg-[#8B4513]",
+        bannerBorder: "border-[#6E360F]",
+        counterBg: "bg-[#6E360F]",
+        counterText: "text-[#FDEBD0]",
+        counterBorder: "border-[#A0522D]",
+        headerBg: "bg-[#9C521A]",
+        headerBorder: "border-[#7A3F14]",
+        headerDivide: "divide-[#BA6A28]",
+        headerSubtext: "text-[#FCE6CA]",
+        altRowBg: "bg-[#FDF9F5]",
+        hoverRowBg: "hover:bg-[#F9EFE5]",
+        accentText: "text-[#8B4513]",
+        badgeBg: "bg-[#FAF0E6]",
+        badgeBorder: "border-[#EAD5C3]",
+        badgeText: "text-[#8B4513]",
+        activeBtn: "bg-[#8B4513] text-white border-[#8B4513]",
+        inactiveBtn: "bg-[#FAF7F2] text-[#8B4513] border-[#EAD5C3] hover:bg-[#8B4513] hover:text-white hover:border-[#8B4513]",
+      };
+    }
+    // Default earthy bronze palette (used for Jharkhand, etc.)
     return {
       bannerBg: "bg-[#4A3426]",
       bannerBorder: "border-[#3B291D]",
@@ -249,6 +371,8 @@ export default function StateSectorView({
       badgeBg: "bg-[#F5EFEB]",
       badgeBorder: "border-[#E2D2C5]",
       badgeText: "text-[#5E4231]",
+      activeBtn: "bg-[#6F4E37] text-white border-[#6F4E37]",
+      inactiveBtn: "bg-[#FAF7F2] text-[#6F4E37] border-[#E8DED1] hover:bg-[#6F4E37] hover:text-white hover:border-[#6F4E37]",
     };
   }, [stateName]);
 
@@ -286,10 +410,10 @@ export default function StateSectorView({
     return sectorGroups.get(selectedSector) || [];
   }, [selectedSector, measurements, sectorGroups]);
 
-  // Dynamic banner title
+  // Dynamic banner title matching uploaded spreadsheets
   const currentSectorTitle = selectedSector === "all"
-    ? `${stateName} Traditional Measurement Units`
-    : `${sectorNameMap.get(selectedSector) || selectedSector} — ${stateName} Traditional Measurement Units (Small → Large)`;
+    ? `All Sectors — IKS Traditional Measurement Units — ${stateName}`
+    : `${sectorNameMap.get(selectedSector) || selectedSector} — IKS Traditional Measurement Units (Small → Large) — ${stateName}`;
 
   return (
     <div className="space-y-6 w-full">
@@ -297,7 +421,7 @@ export default function StateSectorView({
       <div className="bg-white border border-[#E8DED1] rounded-xl p-5 shadow-sm space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#F0E6D8] pb-3">
           <div className="flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-[#6F4E37]" />
+            <Sparkles className={`w-4 h-4 ${theme.accentText}`} />
             <h3 className="font-serif font-bold text-base text-[#2E2A26]">
               Sectors in {stateName}
             </h3>
@@ -309,7 +433,7 @@ export default function StateSectorView({
               onClick={() => setViewMode("table")}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
                 viewMode === "table"
-                  ? "bg-[#6F4E37] text-white shadow-sm font-semibold"
+                  ? `${theme.activeBtn} shadow-sm font-semibold`
                   : "text-[#7A6E65] hover:text-[#2E2A26] hover:bg-[#EAE2D5]"
               }`}
               title="Switch to Excel Table View"
@@ -322,7 +446,7 @@ export default function StateSectorView({
               onClick={() => setViewMode("card")}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
                 viewMode === "card"
-                  ? "bg-[#6F4E37] text-white shadow-sm font-semibold"
+                  ? `${theme.activeBtn} shadow-sm font-semibold`
                   : "text-[#7A6E65] hover:text-[#2E2A26] hover:bg-[#EAE2D5]"
               }`}
               title="Switch to Cards View"
@@ -337,10 +461,10 @@ export default function StateSectorView({
         <div className="flex flex-wrap gap-2.5">
           <button
             onClick={() => setSelectedSector("all")}
-            className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer ${
+            className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer border ${
               selectedSector === "all"
-                ? "bg-[#6F4E37] text-white shadow-sm font-semibold border border-[#6F4E37]"
-                : "bg-[#FAF7F2] text-[#6F4E37] border border-[#E8DED1] hover:border-[#6F4E37] hover:bg-[#6F4E37] hover:text-white"
+                ? `${theme.activeBtn} shadow-sm font-semibold`
+                : theme.inactiveBtn
             }`}
           >
             All Sectors ({measurements.length})
@@ -354,10 +478,10 @@ export default function StateSectorView({
               <button
                 key={secKey}
                 onClick={() => setSelectedSector(secKey)}
-                className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer ${
+                className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer border ${
                   selectedSector === secKey
-                    ? "bg-[#6F4E37] text-white shadow-sm font-semibold border border-[#6F4E37]"
-                    : "bg-[#FAF7F2] text-[#6F4E37] border border-[#E8DED1] hover:border-[#6F4E37] hover:bg-[#6F4E37] hover:text-white"
+                    ? `${theme.activeBtn} shadow-sm font-semibold`
+                    : theme.inactiveBtn
                 }`}
               >
                 {displayName} ({count})
@@ -375,7 +499,7 @@ export default function StateSectorView({
           {selectedSector !== "all" && (
             <span>
               {" "}
-              in <strong className="text-[#6F4E37]">{sectorNameMap.get(selectedSector) || selectedSector}</strong>
+              in <strong className={theme.accentText}>{sectorNameMap.get(selectedSector) || selectedSector}</strong>
             </span>
           )}
         </span>

@@ -33,6 +33,9 @@ export default async function StatePage({
     "orissa": "odisha",
     "jk": "jammu-and-kashmir",
     "rj": "rajasthan",
+    "maharastra": "maharashtra",
+    "andhra pradesh": "andhra-pradesh",
+    "andhra": "andhra-pradesh",
   };
 
   const normalizedSlug = STATE_ALIASES[decodedStateSlug] || STATE_ALIASES[decodedStateSlug.replace(/\s+/g, "-")] || decodedStateSlug;
@@ -59,6 +62,11 @@ export default async function StatePage({
         s.toLowerCase() === state.name.toLowerCase() ||
         s.toLowerCase() === state.slug.toLowerCase()
     )
+  );
+
+  const stateSectorSlugs = new Set(stateMeasurements.map((m) => m.sector));
+  const activeStateSectors = SECTORS.filter(
+    (s) => stateSectorSlugs.has(s.slug) || stateSectorSlugs.has(s.id)
   );
 
   return (
@@ -272,7 +280,7 @@ export default async function StatePage({
 
             <div className="flex flex-wrap gap-2">
 
-              {SECTORS.slice(0, 5).map((sector) => (
+              {(activeStateSectors.length > 0 ? activeStateSectors : SECTORS.slice(0, 5)).map((sector) => (
 
                 <Link
                   key={sector.id}

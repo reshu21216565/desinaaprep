@@ -116,6 +116,7 @@ export default function StateSectorView({
     if (s.includes("nagaland")) return "Naga tribal";
     if (s.includes("sikkim")) return "Nepali/Bhutia/Lepcha";
     if (s.includes("uttarakhand") || s.includes("uttarkhand")) return "Kumaoni/Garhwali";
+    if (s.includes("goa")) return "Konkani";
     return "Local Language";
   }, [stateName]);
 
@@ -354,6 +355,27 @@ export default function StateSectorView({
         inactiveBtn: "bg-[#FAF7F2] text-[#8B4513] border-[#EAD5C3] hover:bg-[#8B4513] hover:text-white hover:border-[#8B4513]",
       };
     }
+    if (s.includes("goa")) {
+      return {
+        bannerBg: "bg-[#0F4C5C]",
+        bannerBorder: "border-[#0B3844]",
+        counterBg: "bg-[#0B3844]",
+        counterText: "text-[#D2EBF0]",
+        counterBorder: "border-[#1D6A7E]",
+        headerBg: "bg-[#155D70]",
+        headerBorder: "border-[#0F4756]",
+        headerDivide: "divide-[#21738A]",
+        headerSubtext: "text-[#C4E5EC]",
+        altRowBg: "bg-[#F3F9FA]",
+        hoverRowBg: "hover:bg-[#E7F3F5]",
+        accentText: "text-[#0F4C5C]",
+        badgeBg: "bg-[#EDF6F8]",
+        badgeBorder: "border-[#C1E0E6]",
+        badgeText: "text-[#0F4C5C]",
+        activeBtn: "bg-[#0F4C5C] text-white border-[#0F4C5C]",
+        inactiveBtn: "bg-[#FAF7F2] text-[#0F4C5C] border-[#C1E0E6] hover:bg-[#0F4C5C] hover:text-white hover:border-[#0F4C5C]",
+      };
+    }
     // Default earthy bronze palette (used for Jharkhand, etc.)
     return {
       bannerBg: "bg-[#4A3426]",
@@ -410,6 +432,55 @@ export default function StateSectorView({
     return sectorGroups.get(selectedSector) || [];
   }, [selectedSector, measurements, sectorGroups]);
 
+  // Check if state is Goa, Maharashtra, or Andhra Pradesh
+  const isGoa = useMemo(() => stateName.toLowerCase().includes("goa"), [stateName]);
+  const isMaharashtra = useMemo(
+    () => stateName.toLowerCase().includes("maharashtra") || stateName.toLowerCase().includes("maharastra"),
+    [stateName]
+  );
+  const isAndhra = useMemo(
+    () => stateName.toLowerCase().includes("andhra"),
+    [stateName]
+  );
+
+  const primaryColor = useMemo(() => {
+    const s = stateName.toLowerCase();
+    if (s.includes("goa")) return "#0F4C5C";
+    if (s.includes("maharashtra") || s.includes("maharastra")) return "#163857";
+    if (s.includes("himachal") || s.includes("uttarakhand") || s.includes("uttarkhand")) return "#1F4E79";
+    if (s.includes("sikkim")) return "#1E5638";
+    if (s.includes("arunachal")) return "#244E33";
+    if (s.includes("tripura")) return "#4F1E40";
+    if (s.includes("manipur")) return "#964B13";
+    if (s.includes("punjab")) return "#996300";
+    if (s.includes("meghalaya")) return "#23492D";
+    if (s.includes("nagaland")) return "#7A281E";
+    if (s.includes("telangana")) return "#1A456E";
+    if (s.includes("andhra")) return "#8B4513";
+    if (s.includes("gujarat") || s.includes("gujarath")) return "#1E3A5F";
+    if (s.includes("rajasthan")) return "#8B4513";
+    return "#4A3426";
+  }, [stateName]);
+
+  const headerColor = useMemo(() => {
+    const s = stateName.toLowerCase();
+    if (s.includes("goa")) return "#155D70";
+    if (s.includes("maharashtra") || s.includes("maharastra")) return "#1F4E79";
+    if (s.includes("himachal") || s.includes("uttarakhand") || s.includes("uttarkhand")) return "#255C8F";
+    if (s.includes("sikkim")) return "#266845";
+    if (s.includes("arunachal")) return "#2E5E3D";
+    if (s.includes("tripura")) return "#5D244D";
+    if (s.includes("manipur")) return "#A35518";
+    if (s.includes("punjab")) return "#A86E04";
+    if (s.includes("meghalaya")) return "#2C5B38";
+    if (s.includes("nagaland")) return "#8E3226";
+    if (s.includes("telangana")) return "#21568A";
+    if (s.includes("andhra")) return "#6E360F";
+    if (s.includes("gujarat") || s.includes("gujarath")) return "#254A77";
+    if (s.includes("rajasthan")) return "#9C521A";
+    return "#5E4231";
+  }, [stateName]);
+
   // Dynamic banner title matching uploaded spreadsheets
   const currentSectorTitle = selectedSector === "all"
     ? `All Sectors — IKS Traditional Measurement Units — ${stateName}`
@@ -421,7 +492,7 @@ export default function StateSectorView({
       <div className="bg-white border border-[#E8DED1] rounded-xl p-5 shadow-sm space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#F0E6D8] pb-3">
           <div className="flex items-center gap-2">
-            <Sparkles className={`w-4 h-4 ${theme.accentText}`} />
+            <Sparkles className="w-4 h-4" style={{ color: primaryColor }} />
             <h3 className="font-serif font-bold text-base text-[#2E2A26]">
               Sectors in {stateName}
             </h3>
@@ -431,9 +502,18 @@ export default function StateSectorView({
           <div className="flex items-center gap-1 bg-[#FAF7F2] border border-[#E8DED1] p-1 rounded-lg self-start sm:self-auto">
             <button
               onClick={() => setViewMode("table")}
+              style={
+                viewMode === "table"
+                  ? {
+                      backgroundColor: primaryColor,
+                      color: "#FFFFFF",
+                      borderColor: primaryColor,
+                    }
+                  : undefined
+              }
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
                 viewMode === "table"
-                  ? `${theme.activeBtn} shadow-sm font-semibold`
+                  ? "shadow-sm font-semibold"
                   : "text-[#7A6E65] hover:text-[#2E2A26] hover:bg-[#EAE2D5]"
               }`}
               title="Switch to Excel Table View"
@@ -444,9 +524,18 @@ export default function StateSectorView({
 
             <button
               onClick={() => setViewMode("card")}
+              style={
+                viewMode === "card"
+                  ? {
+                      backgroundColor: primaryColor,
+                      color: "#FFFFFF",
+                      borderColor: primaryColor,
+                    }
+                  : undefined
+              }
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
                 viewMode === "card"
-                  ? `${theme.activeBtn} shadow-sm font-semibold`
+                  ? "shadow-sm font-semibold"
                   : "text-[#7A6E65] hover:text-[#2E2A26] hover:bg-[#EAE2D5]"
               }`}
               title="Switch to Cards View"
@@ -461,11 +550,20 @@ export default function StateSectorView({
         <div className="flex flex-wrap gap-2.5">
           <button
             onClick={() => setSelectedSector("all")}
-            className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer border ${
+            style={
               selectedSector === "all"
-                ? `${theme.activeBtn} shadow-sm font-semibold`
-                : theme.inactiveBtn
-            }`}
+                ? {
+                    backgroundColor: primaryColor,
+                    color: "#FFFFFF",
+                    borderColor: primaryColor,
+                  }
+                : {
+                    backgroundColor: "#FAF7F2",
+                    color: primaryColor,
+                    borderColor: isGoa ? "#C1E0E6" : isMaharashtra ? "#B8D5E8" : isAndhra ? "#E0C8B0" : "#E8DED1",
+                  }
+            }
+            className="px-4 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer border shadow-sm font-semibold"
           >
             All Sectors ({measurements.length})
           </button>
@@ -473,16 +571,26 @@ export default function StateSectorView({
           {activeSectorKeys.map((secKey) => {
             const count = sectorGroups.get(secKey)?.length || 0;
             const displayName = sectorNameMap.get(secKey) || secKey;
+            const isSelected = selectedSector === secKey;
 
             return (
               <button
                 key={secKey}
                 onClick={() => setSelectedSector(secKey)}
-                className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer border ${
-                  selectedSector === secKey
-                    ? `${theme.activeBtn} shadow-sm font-semibold`
-                    : theme.inactiveBtn
-                }`}
+                style={
+                  isSelected
+                    ? {
+                        backgroundColor: primaryColor,
+                        color: "#FFFFFF",
+                        borderColor: primaryColor,
+                      }
+                    : {
+                        backgroundColor: "#FAF7F2",
+                        color: primaryColor,
+                        borderColor: isGoa ? "#C1E0E6" : isMaharashtra ? "#B8D5E8" : isAndhra ? "#E0C8B0" : "#E8DED1",
+                      }
+                }
+                className="px-4 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer border shadow-sm font-semibold"
               >
                 {displayName} ({count})
               </button>
@@ -499,7 +607,7 @@ export default function StateSectorView({
           {selectedSector !== "all" && (
             <span>
               {" "}
-              in <strong className={theme.accentText}>{sectorNameMap.get(selectedSector) || selectedSector}</strong>
+              in <strong style={{ color: primaryColor }}>{sectorNameMap.get(selectedSector) || selectedSector}</strong>
             </span>
           )}
         </span>
@@ -511,9 +619,15 @@ export default function StateSectorView({
           /* Spreadsheet Excel Data Table Matching Uploaded Spreadsheets (9 Styled Columns) */
           <div className="bg-white border border-[#E8DED1] rounded-xl shadow-sm overflow-hidden w-full">
             {/* Header Banner Bar Matching Uploaded Spreadsheets */}
-            <div className={`${theme.bannerBg} text-white px-5 py-3 font-serif font-bold text-sm flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b ${theme.bannerBorder}`}>
-              <span>{currentSectorTitle}</span>
-              <span className={`text-xs font-sans font-normal ${theme.counterText} ${theme.counterBg} px-2.5 py-0.5 rounded-full border ${theme.counterBorder} self-start sm:self-auto`}>
+            <div
+              style={{ backgroundColor: primaryColor, color: "#FFFFFF" }}
+              className="text-white px-5 py-3 font-serif font-bold text-sm flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-black/10 shadow-sm"
+            >
+              <span className="text-white font-bold text-sm tracking-wide">{currentSectorTitle}</span>
+              <span
+                style={{ backgroundColor: "rgba(0, 0, 0, 0.25)", color: "#FFFFFF" }}
+                className="text-xs font-sans font-medium text-white px-3 py-1 rounded-full border border-white/20 self-start sm:self-auto shadow-inner"
+              >
                 {filtered.length} {filtered.length === 1 ? "Unit" : "Units"}
               </span>
             </div>
@@ -521,21 +635,63 @@ export default function StateSectorView({
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs border-collapse min-w-[960px]">
                 <thead>
-                  <tr className={`${theme.headerBg} text-white font-semibold border-b ${theme.headerBorder} divide-x ${theme.headerDivide}`}>
-                    <th className="py-3.5 px-3 w-10 text-center">#</th>
-                    <th className="py-3.5 px-4 font-bold min-w-[120px]">Unit Name</th>
-                    <th className="py-3.5 px-4 min-w-[130px]">Sanskrit Name</th>
-                    <th className="py-3.5 px-4 min-w-[150px]">
-                      Local Language Name
-                      <span className={`block text-[10px] ${theme.headerSubtext} font-normal font-sans mt-0.5`}>
-                        ({localLangSubtitle})
-                      </span>
+                  <tr
+                    style={{ backgroundColor: headerColor, color: "#FFFFFF" }}
+                    className="text-white font-semibold border-b border-black/10 divide-x divide-white/20"
+                  >
+                    <th style={{ color: "#FFFFFF" }} className="py-3.5 px-3 w-10 text-center font-bold">#</th>
+                    <th style={{ color: "#FFFFFF" }} className="py-3.5 px-4 font-bold min-w-[120px]">
+                      {isGoa || isMaharashtra || isAndhra ? "Traditional Unit Name" : "Unit Name"}
                     </th>
-                    <th className="py-3.5 px-4 min-w-[110px]">Hindi Name</th>
-                    <th className="py-3.5 px-3 min-w-[120px]">Type / Category</th>
-                    <th className="py-3.5 px-4 min-w-[140px]">Approx. Modern Equivalent</th>
-                    <th className="py-3.5 px-4 min-w-[140px]">Relation / Hierarchy</th>
-                    <th className="py-3.5 px-4 min-w-[240px]">Used In / Context</th>
+                    <th style={{ color: "#FFFFFF" }} className="py-3.5 px-4 min-w-[120px]">
+                      Sanskrit Name
+                    </th>
+                    <th style={{ color: "#FFFFFF" }} className="py-3.5 px-4 min-w-[140px]">
+                      {isGoa ? (
+                        <>
+                          Konkani Name
+                          <span className="block text-[10px] text-white/80 font-normal font-sans mt-0.5">
+                            (कोंकणी)
+                          </span>
+                        </>
+                      ) : isMaharashtra ? (
+                        <>
+                          Marathi Name
+                          <span className="block text-[10px] text-white/80 font-normal font-sans mt-0.5">
+                            (मराठी)
+                          </span>
+                        </>
+                      ) : isAndhra ? (
+                        <>
+                          Telugu Name
+                          <span className="block text-[10px] text-white/80 font-normal font-sans mt-0.5">
+                            (తెలుగు)
+                          </span>
+                        </>
+                      ) : (
+                        <>
+                          Local Language Name
+                          <span className={`block text-[10px] ${theme.headerSubtext} font-normal font-sans mt-0.5`}>
+                            ({localLangSubtitle})
+                          </span>
+                        </>
+                      )}
+                    </th>
+                    <th style={{ color: "#FFFFFF" }} className="py-3.5 px-4 min-w-[130px]">
+                      {isGoa || isMaharashtra || isAndhra ? "English Transliteration" : "Hindi Name"}
+                    </th>
+                    <th style={{ color: "#FFFFFF" }} className="py-3.5 px-3 min-w-[120px]">
+                      {isGoa || isMaharashtra || isAndhra ? "Measurement Category" : "Type / Category"}
+                    </th>
+                    <th style={{ color: "#FFFFFF" }} className="py-3.5 px-4 min-w-[140px]">
+                      {isGoa || isMaharashtra || isAndhra ? "Modern SI Equivalent" : "Approx. Modern Equivalent"}
+                    </th>
+                    <th style={{ color: "#FFFFFF" }} className="py-3.5 px-4 min-w-[140px]">
+                      {isGoa || isMaharashtra || isAndhra ? "Relationship Between Units" : "Relation / Hierarchy"}
+                    </th>
+                    <th style={{ color: "#FFFFFF" }} className="py-3.5 px-4 min-w-[240px]">
+                      {isGoa || isMaharashtra || isAndhra ? "Description & Historical Usage" : "Used In / Context"}
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-[#E8DED1] text-[#2E2A26]">
@@ -547,7 +703,10 @@ export default function StateSectorView({
                       } ${theme.hoverRowBg} transition-colors divide-x divide-[#E8DED1]`}
                     >
                       {/* # */}
-                      <td className={`py-3.5 px-3 text-center font-bold ${theme.accentText}`}>
+                      <td
+                        style={{ color: primaryColor }}
+                        className="py-3.5 px-3 text-center font-bold"
+                      >
                         {idx + 1}
                       </td>
 
@@ -561,32 +720,44 @@ export default function StateSectorView({
                         {m.name_sanskrit || "—"}
                       </td>
 
-                      {/* Local Language Name */}
-                      <td className="py-3.5 px-4 text-[#2E2A26] font-medium">
+                      {/* Local Language Name / Konkani Name */}
+                      <td className="py-3.5 px-4 text-[#2E2A26] font-medium font-serif text-sm">
                         {m.local_names && m.local_names.length > 0
                           ? m.local_names.join(", ")
                           : "—"}
                       </td>
 
-                      {/* Hindi Name */}
-                      <td className="py-3.5 px-4 text-[#2E2A26]">
+                      {/* English Transliteration / Hindi Name */}
+                      <td className="py-3.5 px-4 text-[#2E2A26] font-medium">
                         {m.name_hindi || "—"}
                       </td>
 
                       {/* Type / Category */}
                       <td className="py-3.5 px-3">
-                        <span className={`inline-block px-2.5 py-0.5 rounded text-[11px] font-semibold ${theme.badgeBg} ${theme.badgeText} border ${theme.badgeBorder}`}>
+                        <span
+                          style={{
+                            backgroundColor: isGoa ? "#EDF6F8" : isMaharashtra ? "#EEF4F9" : isAndhra ? "#FBF3EB" : undefined,
+                            color: (isGoa || isMaharashtra || isAndhra) ? primaryColor : undefined,
+                            borderColor: isGoa ? "#C1E0E6" : isMaharashtra ? "#B8D5E8" : isAndhra ? "#E8D0BE" : undefined,
+                          }}
+                          className={`inline-block px-2.5 py-0.5 rounded text-[11px] font-semibold ${
+                            (!isGoa && !isMaharashtra && !isAndhra) ? `${theme.badgeBg} ${theme.badgeText} border ${theme.badgeBorder}` : "border"
+                          }`}
+                        >
                           {m.measurement_type || m.category}
                         </span>
                       </td>
 
                       {/* Approx. Modern Equivalent */}
-                      <td className={`py-3.5 px-4 ${theme.accentText} font-mono text-[11px] font-semibold`}>
+                      <td
+                        style={{ color: primaryColor }}
+                        className="py-3.5 px-4 font-mono text-[11px] font-semibold"
+                      >
                         {m.modern_equivalent || "—"}
                       </td>
 
                       {/* Relation / Hierarchy */}
-                      <td className="py-3.5 px-4 text-[#4A3E39] text-[11px]">
+                      <td className="py-3.5 px-4 text-[#4A3E39] text-[11px] font-medium">
                         {m.conversion_formula ||
                           (m.hierarchy && m.hierarchy.length > 0
                             ? m.hierarchy.map((h) => h.unit).join("; ")
@@ -598,6 +769,12 @@ export default function StateSectorView({
                         <div className="text-[#2E2A26]">
                           {m.meaning || (m.used_in && m.used_in.join(", ")) || "—"}
                         </div>
+                        {m.used_in && m.used_in.length > 0 && m.meaning && m.used_in[0] !== m.meaning && (
+                          <div className="mt-1 text-[10px] text-[#6B5E55]">
+                            <span className="font-semibold text-[#4A3E39]">Historical Usage:</span>{" "}
+                            {m.used_in.join(", ")}
+                          </div>
+                        )}
                         {m.historical_period && (
                           <div className="mt-1 text-[10px] text-[#6B5E55]">
                             <span className="font-semibold text-[#4A3E39]">Historical Period:</span>{" "}

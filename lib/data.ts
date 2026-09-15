@@ -20,6 +20,9 @@ import { UTTARAKHAND_MEASUREMENTS } from "@/lib/uttarakhandData";
 import { GUJARAT_MEASUREMENTS } from "@/lib/gujaratData";
 import { RAJASTHAN_MEASUREMENTS } from "@/lib/rajasthanData";
 import { MP_MEASUREMENTS } from "@/lib/mpData";
+import { GOA_MEASUREMENTS } from "@/lib/goaData";
+import { MAHARASHTRA_MEASUREMENTS } from "@/lib/maharashtraData";
+import { AP_MEASUREMENTS } from "@/lib/apData";
 
 // ─── Base Sample Measurements ──────────────────────────────────────────────────
 
@@ -40,7 +43,7 @@ const BASE_SAMPLE_MEASUREMENTS: Measurement[] = [
       "The Angula is one of the oldest units of measurement in Indian history, dating back to the Vedic era. It appears extensively in Vastu Shastra texts and was standardised across multiple ancient treatises including the Arthashastra of Kautilya and the Manasara.",
     modern_equivalent: "~1.763 cm (varies by text)",
     conversion_formula: "1 Angula ≈ 1.763 cm; 24 Angulas = 1 Hasta",
-    states: ["Andhra Pradesh", "Karnataka", "Tamil Nadu"],
+    states: ["Karnataka", "Tamil Nadu"],
     districts: ["Hyderabad", "Warangal", "Vijayawada"],
     used_in: ["Temple construction", "Vastu Shastra", "Sculpture", "Town planning"],
     hierarchy: [
@@ -68,7 +71,7 @@ const BASE_SAMPLE_MEASUREMENTS: Measurement[] = [
       "The Hasta (cubit) was the primary unit of length in ancient Indian construction. Mentioned in both Rigveda and later architectural texts, it was used to plan everything from domestic houses to grand temple complexes. The Arthashastra mentions it as a standard for public works.",
     modern_equivalent: "~45 cm (24 Angulas)",
     conversion_formula: "1 Hasta = 24 Angulas ≈ 45 cm; 4 Hasta = 1 Danda",
-    states: ["Andhra Pradesh", "Tamil Nadu", "Karnataka", "Maharashtra"],
+    states: ["Tamil Nadu", "Karnataka"],
     used_in: ["Temple architecture", "Agricultural land measurement", "Textile"],
     hierarchy: [
       { name: "Angula", relation: "smaller", value: 24, unit: "Angula = 1 Hasta" },
@@ -94,7 +97,7 @@ const BASE_SAMPLE_MEASUREMENTS: Measurement[] = [
       "The Mana was widely used across the Deccan for measuring paddy, jowar, and other grains. It was particularly prevalent in Telangana and was used as a standard unit in local markets well into the 20th century. Different districts had varying sizes of Mana.",
     modern_equivalent: "~2 to 4 kg (varies by district)",
     conversion_formula: "1 Mana ≈ 2-4 kg; 8 Mana = 1 Kula; 40 Mana = 1 Khanduga",
-    states: ["Andhra Pradesh", "Karnataka"],
+    states: ["Karnataka"],
     districts: ["Nalgonda", "Khammam", "Medak", "Nizamabad"],
     used_in: ["Grain measurement", "Market trade", "Revenue collection"],
     hierarchy: [
@@ -120,7 +123,7 @@ const BASE_SAMPLE_MEASUREMENTS: Measurement[] = [
       "The Khanduga was used as the unit for bulk grain transactions and revenue assessments. Nizam-era records refer to it in land revenue calculations. Village accountants (Patwaris) maintained records in Khandugas.",
     modern_equivalent: "~80-160 kg (varies)",
     conversion_formula: "1 Khanduga = 40 Mana ≈ 80-160 kg",
-    states: ["Andhra Pradesh"],
+    states: ["Telangana"],
     used_in: ["Revenue collection", "Bulk grain trade", "Land assessment"],
     tags: ["grain", "revenue", "nizam", "telangana"],
     created_at: "2024-01-01"
@@ -141,7 +144,7 @@ const BASE_SAMPLE_MEASUREMENTS: Measurement[] = [
       "The Tola was standardised by the Mughal empire as the weight of a silver rupee. It was used extensively in trade, jewellery, and medicine across the Indian subcontinent. The British later defined 1 Tola = 180 grains troy = 11.664 grams.",
     modern_equivalent: "11.664 grams",
     conversion_formula: "1 Tola = 12 Mashas = 180 grains troy = 11.664 grams",
-    states: ["Andhra Pradesh", "Maharashtra"],
+    states: ["Telangana"],
     used_in: ["Gold & silver trade", "Ayurvedic medicine", "Spice trade"],
     hierarchy: [
       { name: "Masha", relation: "smaller", value: 12, unit: "Masha = 1 Tola" },
@@ -165,7 +168,7 @@ const BASE_SAMPLE_MEASUREMENTS: Measurement[] = [
       "The Kani was used in Tamil Nadu and Andhra for land measurement. It was part of a complex system of area units used in agricultural land records maintained by the British and Nizam governments.",
     modern_equivalent: "~0.33 acres (varies by region)",
     conversion_formula: "1 Kani ≈ 1/3 acre; 3 Kani = 1 Acre (approximately)",
-    states: ["Andhra Pradesh", "Tamil Nadu"],
+    states: ["Tamil Nadu"],
     used_in: ["Land records", "Agriculture", "Revenue"],
     tags: ["land", "area", "agriculture", "revenue"],
     created_at: "2024-01-01"
@@ -194,6 +197,9 @@ export const SAMPLE_MEASUREMENTS: Measurement[] = [
   ...GUJARAT_MEASUREMENTS,
   ...RAJASTHAN_MEASUREMENTS,
   ...MP_MEASUREMENTS,
+  ...GOA_MEASUREMENTS,
+  ...MAHARASHTRA_MEASUREMENTS,
+  ...AP_MEASUREMENTS,
   ...BASE_SAMPLE_MEASUREMENTS
 ];
 
@@ -221,10 +227,28 @@ export const INDIAN_STATES: State[] = [
       { id: "adb", slug: "adilabad", name: "Adilabad", state_id: "ts", measurement_count: 6 }
     ]
   },
-  { id: "ap", slug: "andhra-pradesh", name: "Andhra Pradesh", capital: "Amaravati", region: "South India", language: "Telugu", measurement_count: 38 },
+  {
+    id: "ap",
+    slug: "andhra-pradesh",
+    name: "Andhra Pradesh",
+    capital: "Amaravati",
+    region: "South India",
+    language: "Telugu",
+    description: "Andhra Pradesh possesses an ancient and rich metrological heritage documented across 12 major sectors including Seed & Crop (Agriculture), Trade & Commerce, Construction & Architecture, Medicine (Ayurveda), Textile & Handloom, Currency & Money, Household & Daily Life, Storage & Transportation, Land Measurement, Transportation & Distance, Livestock & Dairy, and Gold & Jewellery, drawing from classical treatises (Mānasāra, Mayamata, Charaka Samhita, Sushruta Samhita, Arthashastra, Śilpa Śāstra), Satavahana and Vijayanagara epigraphs, and Madras Presidency historical records.",
+    measurement_count: 192
+  },
   { id: "tn", slug: "tamil-nadu", name: "Tamil Nadu", capital: "Chennai", region: "South India", language: "Tamil", measurement_count: 55 },
   { id: "ka", slug: "karnataka", name: "Karnataka", capital: "Bengaluru", region: "South India", language: "Kannada", measurement_count: 47 },
-  { id: "mh", slug: "maharashtra", name: "Maharashtra", capital: "Mumbai", region: "West India", language: "Marathi", measurement_count: 52 },
+  {
+    id: "mh",
+    slug: "maharashtra",
+    name: "Maharashtra",
+    capital: "Mumbai",
+    region: "West India",
+    language: "Marathi",
+    description: "Maharashtra possesses a rich traditional metrological heritage documented across 12 major sectors including Transportation & Distance, Land Measurement, Livestock & Dairy, Household & Daily Life, Gold & Jewellery, Seed & Crop (Agriculture), Currency & Money, Storage & Transportation, Trade & Commerce, Textile & Handloom, Medicine (Ayurveda), and Construction & Architecture, drawing from ancient Sanskrit treatises (Mānasāra, Mayamata, Charaka Samhita, Sushruta Samhita, Arthashastra, Śilpa Śāstra), Maratha-era revenue records, and Bombay Presidency historical archives.",
+    measurement_count: 186
+  },
   {
     id: "gj",
     slug: "gujarat",
@@ -373,7 +397,16 @@ export const INDIAN_STATES: State[] = [
     ]
   },
   { id: "ct", slug: "chhattisgarh", name: "Chhattisgarh", capital: "Raipur", region: "Central India", language: "Chhattisgarhi / Hindi", measurement_count: 21 },
-  { id: "ga", slug: "goa", name: "Goa", capital: "Panaji", region: "West India", language: "Konkani", measurement_count: 15 },
+  {
+    id: "ga",
+    slug: "goa",
+    name: "Goa",
+    capital: "Panaji",
+    region: "West India",
+    language: "Konkani",
+    description: "Goa possesses a distinct traditional metrological heritage documented across 12 major sectors including Seed & Crop (Agriculture), Trade & Commerce, Construction & Architecture, Medicine (Ayurveda), Textile & Handloom, Currency & Money, Household & Daily Life, Storage & Transportation, Land Measurement, Transportation & Distance, Livestock & Dairy, and Gold & Jewellery, drawing from ancient Sanskrit treatises (Mānasāra, Arthashastra, Charaka Samhita, Sushruta Samhita), local Konkani village customs, and Portuguese colonial-era administrative records.",
+    measurement_count: 194
+  },
   {
     id: "ut",
     slug: "uttarakhand",

@@ -26,6 +26,7 @@ const SECTOR_ORDER = [
   "textile-handloom",
   "medicine",
   "architecture",
+  "time",
 ];
 
 // Display title lookup map for all possible sector keys
@@ -58,6 +59,7 @@ const SECTOR_TITLE_MAP: Record<string, string> = {
   "architecture": "Construction & Architecture",
   "arch": "Construction & Architecture",
   "construction": "Construction & Architecture",
+  "time": "Time & Calendar",
 };
 
 export default function StateSectorView({
@@ -103,7 +105,7 @@ export default function StateSectorView({
     if (s.includes("assam")) return "Assamese/Hindi";
     if (s.includes("uttar pradesh") || s === "up") return "Hindi/Awadhi";
     if (s.includes("telangana") || s.includes("andhra")) return "Telugu";
-    if (s.includes("tamil nadu")) return "Tamil";
+    if (s.includes("tamil nadu") || s.includes("tamilnadu") || s.includes("tamil")) return "Tamil";
     if (s.includes("karnataka")) return "Kannada";
     if (s.includes("maharashtra")) return "Marathi";
     if (s.includes("gujarat") || s.includes("gujarath")) return "Gujarati";
@@ -117,12 +119,120 @@ export default function StateSectorView({
     if (s.includes("sikkim")) return "Nepali/Bhutia/Lepcha";
     if (s.includes("uttarakhand") || s.includes("uttarkhand")) return "Kumaoni/Garhwali";
     if (s.includes("goa")) return "Konkani";
+    if (s.includes("mizoram")) return "Mizo";
+    if (s.includes("chhattisgarh") || s.includes("chattisgarh")) return "Chhattisgarhi";
+    if (s.includes("jammu") || s.includes("kashmir") || s === "jk") return "Kashmiri/Dogri";
     return "Local Language";
   }, [stateName]);
 
   // Dynamic theme colors matching each state's authentic spreadsheet aesthetic
   const theme = useMemo(() => {
     const s = stateName.toLowerCase();
+    if (s.includes("jammu") || s.includes("kashmir") || s === "jk") {
+      return {
+        bannerBg: "bg-[#0E4A5C]",
+        bannerBorder: "border-[#093542]",
+        counterBg: "bg-[#093542]",
+        counterText: "text-[#D6EFF6]",
+        counterBorder: "border-[#1A6278]",
+        headerBg: "bg-[#12586D]",
+        headerBorder: "border-[#0C3F4E]",
+        headerDivide: "divide-[#217792]",
+        headerSubtext: "text-[#C8E8F2]",
+        altRowBg: "bg-[#F3F9FA]",
+        hoverRowBg: "hover:bg-[#E6F3F6]",
+        accentText: "text-[#0E4A5C]",
+        badgeBg: "bg-[#EDF7F9]",
+        badgeBorder: "border-[#BEE1E8]",
+        badgeText: "text-[#0E4A5C]",
+        activeBtn: "bg-[#0E4A5C] text-white border-[#0E4A5C]",
+        inactiveBtn: "bg-[#FAF7F2] text-[#0E4A5C] border-[#BEE1E8] hover:bg-[#0E4A5C] hover:text-white hover:border-[#0E4A5C]",
+      };
+    }
+    if (s.includes("tamil")) {
+      return {
+        bannerBg: "bg-[#7A2818]",
+        bannerBorder: "border-[#5A1C10]",
+        counterBg: "bg-[#5A1C10]",
+        counterText: "text-[#FCE8E2]",
+        counterBorder: "border-[#9E3520]",
+        headerBg: "bg-[#8B3A18]",
+        headerBorder: "border-[#6E2612]",
+        headerDivide: "divide-[#B04E2A]",
+        headerSubtext: "text-[#F5D5C8]",
+        altRowBg: "bg-[#FAF6F4]",
+        hoverRowBg: "hover:bg-[#F5ECE8]",
+        accentText: "text-[#8B3A18]",
+        badgeBg: "bg-[#FDF3F0]",
+        badgeBorder: "border-[#E8C4B8]",
+        badgeText: "text-[#8B3A18]",
+        activeBtn: "bg-[#8B3A18] text-white border-[#8B3A18]",
+        inactiveBtn: "bg-[#FAF7F2] text-[#8B3A18] border-[#E8C4B8] hover:bg-[#8B3A18] hover:text-white hover:border-[#8B3A18]",
+      };
+    }
+    if (s.includes("chhattisgarh") || s.includes("chattisgarh")) {
+      return {
+        bannerBg: "bg-[#1F4E79]",
+        bannerBorder: "border-[#163857]",
+        counterBg: "bg-[#163857]",
+        counterText: "text-[#D8E9F6]",
+        counterBorder: "border-[#2C587D]",
+        headerBg: "bg-[#255C8F]",
+        headerBorder: "border-[#1B446A]",
+        headerDivide: "divide-[#3A72A4]",
+        headerSubtext: "text-[#CCE0F0]",
+        altRowBg: "bg-[#F3F7FA]",
+        hoverRowBg: "hover:bg-[#E8F0F7]",
+        accentText: "text-[#1F4E79]",
+        badgeBg: "bg-[#EDF4F9]",
+        badgeBorder: "border-[#C5DBEC]",
+        badgeText: "text-[#1F4E79]",
+        activeBtn: "bg-[#1F4E79] text-white border-[#1F4E79]",
+        inactiveBtn: "bg-[#FAF7F2] text-[#1F4E79] border-[#D0DFEB] hover:bg-[#1F4E79] hover:text-white hover:border-[#1F4E79]",
+      };
+    }
+    if (s.includes("mizoram")) {
+      return {
+        bannerBg: "bg-[#1F4E79]",
+        bannerBorder: "border-[#163857]",
+        counterBg: "bg-[#163857]",
+        counterText: "text-[#D8E9F6]",
+        counterBorder: "border-[#2C587D]",
+        headerBg: "bg-[#255C8F]",
+        headerBorder: "border-[#1B446A]",
+        headerDivide: "divide-[#3A72A4]",
+        headerSubtext: "text-[#CCE0F0]",
+        altRowBg: "bg-[#F3F7FA]",
+        hoverRowBg: "hover:bg-[#E8F0F7]",
+        accentText: "text-[#1F4E79]",
+        badgeBg: "bg-[#EDF4F9]",
+        badgeBorder: "border-[#C5DBEC]",
+        badgeText: "text-[#1F4E79]",
+        activeBtn: "bg-[#1F4E79] text-white border-[#1F4E79]",
+        inactiveBtn: "bg-[#FAF7F2] text-[#1F4E79] border-[#D0DFEB] hover:bg-[#1F4E79] hover:text-white hover:border-[#1F4E79]",
+      };
+    }
+    if (s.includes("karnataka")) {
+      return {
+        bannerBg: "bg-[#1F4E78]",
+        bannerBorder: "border-[#163857]",
+        counterBg: "bg-[#163857]",
+        counterText: "text-[#D8E9F6]",
+        counterBorder: "border-[#2C587D]",
+        headerBg: "bg-[#1F4E78]",
+        headerBorder: "border-[#163857]",
+        headerDivide: "divide-[#3A72A4]",
+        headerSubtext: "text-[#CCE0F0]",
+        altRowBg: "bg-[#F3F7FA]",
+        hoverRowBg: "hover:bg-[#E8F0F7]",
+        accentText: "text-[#1F4E78]",
+        badgeBg: "bg-[#EDF4F9]",
+        badgeBorder: "border-[#C5DBEC]",
+        badgeText: "text-[#1F4E78]",
+        activeBtn: "bg-[#1F4E78] text-white border-[#1F4E78]",
+        inactiveBtn: "bg-[#FAF7F2] text-[#1F4E78] border-[#D0DFEB] hover:bg-[#1F4E78] hover:text-white hover:border-[#1F4E78]",
+      };
+    }
     if (s.includes("himachal") || s.includes("uttarakhand") || s.includes("uttarkhand")) {
       return {
         bannerBg: "bg-[#1F4E79]",
@@ -432,7 +542,7 @@ export default function StateSectorView({
     return sectorGroups.get(selectedSector) || [];
   }, [selectedSector, measurements, sectorGroups]);
 
-  // Check if state is Goa, Maharashtra, or Andhra Pradesh
+  // Check if state is Goa, Maharashtra, Andhra Pradesh, or Karnataka
   const isGoa = useMemo(() => stateName.toLowerCase().includes("goa"), [stateName]);
   const isMaharashtra = useMemo(
     () => stateName.toLowerCase().includes("maharashtra") || stateName.toLowerCase().includes("maharastra"),
@@ -442,9 +552,18 @@ export default function StateSectorView({
     () => stateName.toLowerCase().includes("andhra"),
     [stateName]
   );
+  const isKarnataka = useMemo(
+    () => stateName.toLowerCase().includes("karnataka"),
+    [stateName]
+  );
 
   const primaryColor = useMemo(() => {
     const s = stateName.toLowerCase();
+    if (s.includes("jammu") || s.includes("kashmir") || s === "jk") return "#0E4A5C";
+    if (s.includes("tamil")) return "#803018";
+    if (s.includes("chhattisgarh") || s.includes("chattisgarh")) return "#1F4E79";
+    if (s.includes("mizoram")) return "#1F4E79";
+    if (s.includes("karnataka")) return "#1F4E78";
     if (s.includes("goa")) return "#0F4C5C";
     if (s.includes("maharashtra") || s.includes("maharastra")) return "#163857";
     if (s.includes("himachal") || s.includes("uttarakhand") || s.includes("uttarkhand")) return "#1F4E79";
@@ -464,6 +583,11 @@ export default function StateSectorView({
 
   const headerColor = useMemo(() => {
     const s = stateName.toLowerCase();
+    if (s.includes("jammu") || s.includes("kashmir") || s === "jk") return "#12586D";
+    if (s.includes("tamil")) return "#8B3A18";
+    if (s.includes("chhattisgarh") || s.includes("chattisgarh")) return "#255C8F";
+    if (s.includes("mizoram")) return "#255C8F";
+    if (s.includes("karnataka")) return "#1F4E78";
     if (s.includes("goa")) return "#155D70";
     if (s.includes("maharashtra") || s.includes("maharastra")) return "#1F4E79";
     if (s.includes("himachal") || s.includes("uttarakhand") || s.includes("uttarkhand")) return "#255C8F";
@@ -560,7 +684,7 @@ export default function StateSectorView({
                 : {
                     backgroundColor: "#FAF7F2",
                     color: primaryColor,
-                    borderColor: isGoa ? "#C1E0E6" : isMaharashtra ? "#B8D5E8" : isAndhra ? "#E0C8B0" : "#E8DED1",
+                    borderColor: isGoa ? "#C1E0E6" : isMaharashtra ? "#B8D5E8" : isAndhra ? "#E0C8B0" : isKarnataka ? "#C5DBEC" : "#E8DED1",
                   }
             }
             className="px-4 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer border shadow-sm font-semibold"
@@ -587,7 +711,7 @@ export default function StateSectorView({
                     : {
                         backgroundColor: "#FAF7F2",
                         color: primaryColor,
-                        borderColor: isGoa ? "#C1E0E6" : isMaharashtra ? "#B8D5E8" : isAndhra ? "#E0C8B0" : "#E8DED1",
+                        borderColor: isGoa ? "#C1E0E6" : isMaharashtra ? "#B8D5E8" : isAndhra ? "#E0C8B0" : isKarnataka ? "#C5DBEC" : "#E8DED1",
                       }
                 }
                 className="px-4 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer border shadow-sm font-semibold"
@@ -641,7 +765,7 @@ export default function StateSectorView({
                   >
                     <th style={{ color: "#FFFFFF" }} className="py-3.5 px-3 w-10 text-center font-bold">#</th>
                     <th style={{ color: "#FFFFFF" }} className="py-3.5 px-4 font-bold min-w-[120px]">
-                      {isGoa || isMaharashtra || isAndhra ? "Traditional Unit Name" : "Unit Name"}
+                      {isGoa || isMaharashtra || isAndhra || isKarnataka ? "Traditional Unit Name" : "Unit Name"}
                     </th>
                     <th style={{ color: "#FFFFFF" }} className="py-3.5 px-4 min-w-[120px]">
                       Sanskrit Name
@@ -668,6 +792,13 @@ export default function StateSectorView({
                             (తెలుగు)
                           </span>
                         </>
+                      ) : isKarnataka ? (
+                        <>
+                          Kannada Name
+                          <span className="block text-[10px] text-white/80 font-normal font-sans mt-0.5">
+                            (ಕನ್ನಡ)
+                          </span>
+                        </>
                       ) : (
                         <>
                           Local Language Name
@@ -678,19 +809,19 @@ export default function StateSectorView({
                       )}
                     </th>
                     <th style={{ color: "#FFFFFF" }} className="py-3.5 px-4 min-w-[130px]">
-                      {isGoa || isMaharashtra || isAndhra ? "English Transliteration" : "Hindi Name"}
+                      {isGoa || isMaharashtra || isAndhra || isKarnataka ? "English Transliteration" : "Hindi Name"}
                     </th>
                     <th style={{ color: "#FFFFFF" }} className="py-3.5 px-3 min-w-[120px]">
-                      {isGoa || isMaharashtra || isAndhra ? "Measurement Category" : "Type / Category"}
+                      {isGoa || isMaharashtra || isAndhra || isKarnataka ? "Measurement Category" : "Type / Category"}
                     </th>
                     <th style={{ color: "#FFFFFF" }} className="py-3.5 px-4 min-w-[140px]">
-                      {isGoa || isMaharashtra || isAndhra ? "Modern SI Equivalent" : "Approx. Modern Equivalent"}
+                      {isGoa || isMaharashtra || isAndhra || isKarnataka ? "Modern SI Equivalent" : "Approx. Modern Equivalent"}
                     </th>
                     <th style={{ color: "#FFFFFF" }} className="py-3.5 px-4 min-w-[140px]">
-                      {isGoa || isMaharashtra || isAndhra ? "Relationship Between Units" : "Relation / Hierarchy"}
+                      {isGoa || isMaharashtra || isAndhra || isKarnataka ? "Relationship Between Units" : "Relation / Hierarchy"}
                     </th>
                     <th style={{ color: "#FFFFFF" }} className="py-3.5 px-4 min-w-[240px]">
-                      {isGoa || isMaharashtra || isAndhra ? "Description & Historical Usage" : "Used In / Context"}
+                      {isGoa || isMaharashtra || isAndhra || isKarnataka ? "Description & Historical Usage" : "Used In / Context"}
                     </th>
                   </tr>
                 </thead>
@@ -736,12 +867,12 @@ export default function StateSectorView({
                       <td className="py-3.5 px-3">
                         <span
                           style={{
-                            backgroundColor: isGoa ? "#EDF6F8" : isMaharashtra ? "#EEF4F9" : isAndhra ? "#FBF3EB" : undefined,
-                            color: (isGoa || isMaharashtra || isAndhra) ? primaryColor : undefined,
-                            borderColor: isGoa ? "#C1E0E6" : isMaharashtra ? "#B8D5E8" : isAndhra ? "#E8D0BE" : undefined,
+                            backgroundColor: isGoa ? "#EDF6F8" : isMaharashtra ? "#EEF4F9" : isAndhra ? "#FBF3EB" : isKarnataka ? "#EDF4F9" : undefined,
+                            color: (isGoa || isMaharashtra || isAndhra || isKarnataka) ? primaryColor : undefined,
+                            borderColor: isGoa ? "#C1E0E6" : isMaharashtra ? "#B8D5E8" : isAndhra ? "#E8D0BE" : isKarnataka ? "#C5DBEC" : undefined,
                           }}
                           className={`inline-block px-2.5 py-0.5 rounded text-[11px] font-semibold ${
-                            (!isGoa && !isMaharashtra && !isAndhra) ? `${theme.badgeBg} ${theme.badgeText} border ${theme.badgeBorder}` : "border"
+                            (!isGoa && !isMaharashtra && !isAndhra && !isKarnataka) ? `${theme.badgeBg} ${theme.badgeText} border ${theme.badgeBorder}` : "border"
                           }`}
                         >
                           {m.measurement_type || m.category}

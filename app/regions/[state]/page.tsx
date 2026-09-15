@@ -36,6 +36,15 @@ export default async function StatePage({
     "maharastra": "maharashtra",
     "andhra pradesh": "andhra-pradesh",
     "andhra": "andhra-pradesh",
+    "ka": "karnataka",
+    "mz": "mizoram",
+    "chattisgarh": "chhattisgarh",
+    "ct": "chhattisgarh",
+    "cg": "chhattisgarh",
+    "jammu and kashmir": "jammu-and-kashmir",
+    "jammu-kashmir": "jammu-and-kashmir",
+    "jammu": "jammu-and-kashmir",
+    "kashmir": "jammu-and-kashmir",
   };
 
   const normalizedSlug = STATE_ALIASES[decodedStateSlug] || STATE_ALIASES[decodedStateSlug.replace(/\s+/g, "-")] || decodedStateSlug;
